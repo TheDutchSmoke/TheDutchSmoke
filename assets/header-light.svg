@@ -17,18 +17,10 @@
 <rect width="1100" height="48" fill="#FFE0EF"/>
 <path d="M0 48H1100" stroke="#EDBDD7"/>
 <circle cx="29" cy="24" r="5" fill="#D81779"/><circle cx="47" cy="24" r="5" fill="#F5ADCF"/><circle cx="65" cy="24" r="5" fill="#EDBDD7"/>
-<text x="94" y="30" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" fill="#865B7C">tristan's little corner</text>
 <g transform="translate(1063 26) scale(0.65)"><path class="" d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#D81779"/></g>
 <circle cx="918" cy="220" r="161" fill="#FFE0EF" opacity=".45"/>
 <ellipse cx="935" cy="225" rx="167" ry="111" fill="none" stroke="#EDBDD7" stroke-dasharray="3 9" transform="rotate(-18 935 225)"/>
-<text x="53" y="159" font-family="DejaVu Sans, Arial, sans-serif" font-size="69" font-weight="700" letter-spacing="-3.6" fill="#502A49">hi, i'm tristan<tspan fill="#D81779">.</tspan></text>
-<text x="57" y="206" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" fill="#865B7C">a little corner for things I'm figuring out</text>
-<rect x="57" y="253" width="118" height="33" rx="16.5" fill="#FFFBFE" stroke="#EDBDD7"/>
-<text x="116" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#865B7C">DNS &amp; email</text>
-<rect x="185" y="253" width="118" height="33" rx="16.5" fill="#FFFBFE" stroke="#EDBDD7"/>
-<text x="244" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#865B7C">self-hosting</text>
-<rect x="313" y="253" width="124" height="33" rx="16.5" fill="#FFFBFE" stroke="#EDBDD7"/>
-<text x="375" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#865B7C">side projects</text>
+<text x="53" y="227" font-family="DejaVu Sans, Arial, sans-serif" font-size="69" font-weight="700" letter-spacing="-3.6" fill="#502A49">hi, i'm tristan<tspan fill="#D81779">.</tspan></text>
 <g transform="rotate(5 885 210)">
 <ellipse cx="889" cy="309" rx="112" ry="12" fill="#E7B5D2" opacity=".5"/>
 <path d="M869 258L860 296H915L907 258Z" fill="#F5ADCF" stroke="#EDBDD7" stroke-width="2"/>

@@ -1,4 +1,4 @@
-<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/header-dark.svg"><img src="./assets/header-light.svg" alt="Hi, I&#x27;m Tristan — a little corner for things I&#x27;m figuring out." width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/header-dark.svg"><img src="./assets/header-light.svg" alt="Hi, I&#x27;m Tristan." width="100%"></picture>
 
 <p align="center">I like having my own little corner of the internet — and making it feel like mine.</p>
 
