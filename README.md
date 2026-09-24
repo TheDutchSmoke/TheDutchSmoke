@@ -3,35 +3,35 @@
   <img src="./assets/header-light.svg" alt="Hi, I'm Tristan — a little corner for things I'm figuring out." width="100%">
 </picture>
 
-My background is in **domains, DNS and email**. This is my personal corner for self-hosting, small tools, websites and the occasional game.
+I like having my own little corner of the internet — and making it feel like mine.
 
-These days, **AI writes the code for my projects**. I come up with the ideas, explain how I want things to work, test them over several days, and keep asking for changes. I'm learning how the pieces fit together as I go.
-
-I started out customising existing Jekyll themes by hand. AI now lets me attempt projects I couldn't have built on my own.
+My background is in **domains, DNS and email**. Outside that, I spend time with self-hosting, websites, small tools and the occasional game. This is where some of those interests end up.
 
 [My website — tristan.cv](https://tristan.cv)
 
 ### 🗺️ Incidentenkaart Nederland
 
-A map of reported incidents in the Netherlands. The interesting part is keeping sources, follow-up reports and uncertainty straight — especially the difference between *none*, *unknown* and *not mentioned*.
+A map of reported incidents in the Netherlands, with links back to the sources.
 
-Still a work in progress, with plenty of awkward edge cases.
+One detail I care about: a report that doesn't mention victims shouldn't become “no victims” on the map. *None*, *unknown* and *not mentioned* mean different things. Following up on reports and keeping that uncertainty visible is an ongoing part of the project.
 
 [Explore the map →](https://incidentenkaart.nl)
 
 ### 🐔 Crossy Rivals
 
-A browser game inspired by Crossy Road, with singleplayer and multiplayer. A fun project involving hopping characters, lobbies, collisions and getting everyone to see the same game.
+A browser game inspired by Crossy Road. Hop through traffic on your own or play with friends, with multiplayer lobbies and shared rounds.
+
+A slightly different way to spend time in a browser than looking at DNS records.
 
 [Play a round →](https://crossyrivals.com)
 
-### 🌸 A few smaller corners
+### 🌸 Smaller things
 
 - **[SprinkleGrid](https://sprinklegrid.nl)** — a colourful gallery experiment with seasonal themes.
-- **[SakuraCord](https://github.com/SakuraCordApp/SakuraCord)** — I opened [a PR to show an emoji's source server](https://github.com/SakuraCordApp/SakuraCord/pull/22) in the picker. A small improvement to an app I use.
-
-<sub>The web projects above currently have private application repositories. SakuraCord is an independent project; my contribution is the proposed change linked above.</sub>
+- **[A small SakuraCord contribution](https://github.com/SakuraCordApp/SakuraCord/pull/22)** — a pull request to show which server a custom emoji comes from, right in the picker.
 
 ---
+
+For my recent projects, AI handles the coding. I focus on the ideas, how things should behave, testing over several days and working through changes. My older websites started with existing Jekyll themes that I customised by hand.
 
 <sub>Usually somewhere between DNS, self-hosting, privacy, games and “can I make this a little nicer?”</sub>
