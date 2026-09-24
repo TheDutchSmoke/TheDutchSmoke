@@ -1,20 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="280" viewBox="0 0 1100 280" role="img" aria-labelledby="title desc">
-<title id="title">hi, i'm tristan.</title>
-<desc id="desc">A little corner for things I'm figuring out. A pink and lavender orbit with small stars.</desc>
-<defs><clipPath id="clip"><rect width="1100" height="280" rx="24"/></clipPath><linearGradient id="wash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5D304E"/><stop offset="1" stop-color="#403058"/></linearGradient></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-labelledby="title desc">
+<title id="title">hi, i&#x27;m tristan.</title><desc id="desc">Pink and lavender browser window, a little heart-faced computer with a bow, blossoms and gently twinkling stars.</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#291E31"/><stop offset="1" stop-color="#3C2549"/></linearGradient>
+<clipPath id="clip"><rect x="1" y="1" width="1098" height="358" rx="26"/></clipPath>
+</defs>
+<style>
+.twinkle { animation: twinkle 7s ease-in-out infinite; }
+.late { animation-delay: -3s; }
+.float { animation: float 8s ease-in-out infinite; }
+@keyframes twinkle { 0%,100% { opacity:.45; } 50% { opacity:1; } }
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-5px); } }
+@media (prefers-reduced-motion: reduce) { .twinkle,.float { animation:none; } }
+</style>
 <g clip-path="url(#clip)">
-<rect width="1100" height="280" fill="#1D1728"/>
-<circle cx="1008" cy="95" r="237" fill="url(#wash)" opacity=".72"/>
-<circle cx="975" cy="126" r="128" fill="none" stroke="#796383" stroke-width="1.5"/>
-<ellipse cx="975" cy="126" rx="183" ry="72" transform="rotate(-31 975 126)" fill="none" stroke="#796383" stroke-width="1.5"/>
-<circle cx="857" cy="196" r="11" fill="#FF75B9"/>
-<circle cx="1028" cy="8" r="5" fill="#FF75B9"/>
-<path d="M923 96l5 16 16 5-16 5-5 16-5-16-16-5 16-5z" fill="#FF75B9"/>
-<path d="M1042 180l3 10 10 3-10 3-3 10-3-10-10-3 10-3z" fill="#CABBD9" opacity=".6"/>
-<path d="M804 62l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#FF75B9" opacity=".7"/>
-<circle cx="753" cy="216" r="3" fill="#FF75B9"/>
-<text x="62" y="70" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" letter-spacing="2.2" fill="#CABBD9">@TheDutchSmoke</text>
-<text x="58" y="158" font-family="DejaVu Sans, Arial, sans-serif" font-size="70" font-weight="700" letter-spacing="-3" fill="#FFF3FB">hi, i'm tristan<tspan fill="#FF75B9">.</tspan></text>
-<text x="62" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" fill="#CABBD9">a little corner for things I'm figuring out</text>
+<rect width="1100" height="360" fill="url(#bg)"/>
+<rect width="1100" height="48" fill="#392338"/>
+<path d="M0 48H1100" stroke="#704664"/>
+<circle cx="29" cy="24" r="5" fill="#FF8DC4"/><circle cx="47" cy="24" r="5" fill="#B96191"/><circle cx="65" cy="24" r="5" fill="#704664"/>
+<text x="94" y="30" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" fill="#D5A9CC">tristan's little corner</text>
+<g transform="translate(1063 26) scale(0.65)"><path class="" d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#FF8DC4"/></g>
+<circle cx="918" cy="220" r="161" fill="#392338" opacity=".45"/>
+<ellipse cx="935" cy="225" rx="167" ry="111" fill="none" stroke="#704664" stroke-dasharray="3 9" transform="rotate(-18 935 225)"/>
+<text x="53" y="159" font-family="DejaVu Sans, Arial, sans-serif" font-size="69" font-weight="700" letter-spacing="-3.6" fill="#FFE9F5">hi, i'm tristan<tspan fill="#FF8DC4">.</tspan></text>
+<text x="57" y="206" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" fill="#D5A9CC">a little corner for things I'm figuring out</text>
+<rect x="57" y="253" width="118" height="33" rx="16.5" fill="#46314C" stroke="#704664"/>
+<text x="116" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#D5A9CC">DNS &amp; email</text>
+<rect x="185" y="253" width="118" height="33" rx="16.5" fill="#46314C" stroke="#704664"/>
+<text x="244" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#D5A9CC">self-hosting</text>
+<rect x="313" y="253" width="124" height="33" rx="16.5" fill="#46314C" stroke="#704664"/>
+<text x="375" y="275" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#D5A9CC">side projects</text>
+<g transform="rotate(5 885 210)">
+<ellipse cx="889" cy="309" rx="112" ry="12" fill="#19151F" opacity=".5"/>
+<path d="M869 258L860 296H915L907 258Z" fill="#B96191" stroke="#704664" stroke-width="2"/>
+<rect x="833" y="291" width="110" height="13" rx="6.5" fill="#392338" stroke="#704664" stroke-width="2"/>
+<rect x="775" y="113" width="225" height="161" rx="22" fill="#B96191"/>
+<rect x="775" y="106" width="225" height="161" rx="22" fill="#46314C" stroke="#704664" stroke-width="2"/>
+<rect x="791" y="123" width="193" height="111" rx="13" fill="#34283F" stroke="#704664"/>
+<path d="M803 135H972" stroke="#46314C" stroke-width="2" opacity=".55"/>
+<g class="float">
+<g transform="translate(888 174) scale(2)"><path class="" d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#FF8DC4"/></g>
+<circle cx="879" cy="170" r="2.2" fill="#46314C"/><circle cx="897" cy="170" r="2.2" fill="#46314C"/>
+<path d="M883 177Q888 183 893 177" fill="none" stroke="#46314C" stroke-width="2.2" stroke-linecap="round"/>
 </g>
+<circle cx="974" cy="250" r="3" fill="#FF8DC4"/>
+<path d="M877 249H899" stroke="#704664" stroke-width="3" stroke-linecap="round"/>
+</g>
+<g transform="translate(979 112) rotate(15)" fill="#392338" stroke="#FF8DC4" stroke-width="2.5" stroke-linejoin="round">
+<path d="M0 0C-17-23-43-19-36 1C-30 13-9 10 0 0ZM0 0C17-23 43-19 36 1C30 13 9 10 0 0Z"/>
+<path d="M-3 2L-20 30L-6 26L-2 34L6 3M4 3L20 30L25 21L35 23L11-2"/>
+<ellipse rx="7" ry="8"/>
+</g>
+<path class="twinkle" transform="translate(742 107) scale(1.2)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#FF8DC4"/>
+<path class="twinkle late" transform="translate(1032 220) scale(1)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#FF8DC4"/>
+<path class="twinkle late" transform="translate(720 277) scale(0.65)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#FF8DC4"/>
+<g transform="translate(769 306) scale(0.8)" fill="#B96191"><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(0)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(288)"/><circle r="3" fill="#FF8DC4"/></g>
+<g transform="translate(1023 311) scale(0.58)" fill="#B96191"><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(0)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(288)"/><circle r="3" fill="#FF8DC4"/></g>
+<g transform="translate(1042 159) scale(0.46)"><path class="" d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#FF8DC4"/></g>
+<circle cx="690" cy="237" r="2.5" fill="#B96191"/>
+<circle cx="1008" cy="78" r="2.5" fill="#B96191"/>
+</g>
+<rect x="1" y="1" width="1098" height="358" rx="26" fill="none" stroke="#704664" stroke-width="2"/>
 </svg>
