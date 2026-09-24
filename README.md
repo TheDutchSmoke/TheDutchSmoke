@@ -11,9 +11,7 @@ My background is in **domains, DNS and email**. Outside that, I spend time with 
 
 ### 🗺️ Incidentenkaart Nederland
 
-A map of reported incidents in the Netherlands, with links back to the sources.
-
-One detail I care about: a report that doesn't mention victims shouldn't become “no victims” on the map. *None*, *unknown* and *not mentioned* mean different things. Following up on reports and keeping that uncertainty visible is an ongoing part of the project.
+A project bringing public incident reports in the Netherlands together on a map. The focus is on traceable sources, related reports and a clear distinction between what is known and what hasn't been reported.
 
 [Explore the map →](https://incidentenkaart.nl)
 
@@ -32,6 +30,6 @@ A slightly different way to spend time in a browser than looking at DNS records.
 
 ---
 
-For my recent projects, AI handles the coding. I focus on the ideas, how things should behave, testing over several days and working through changes. My older websites started with existing Jekyll themes that I customised by hand.
+The projects featured here were developed with AI handling the coding. My role: shaping the ideas, deciding how things should behave, testing and refining the results. My earlier websites started with existing Jekyll themes that I customised by hand.
 
 <sub>Usually somewhere between DNS, self-hosting, privacy, games and “can I make this a little nicer?”</sub>
