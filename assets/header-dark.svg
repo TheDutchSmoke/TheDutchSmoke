@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="280" viewBox="0 0 1100 280" role="img" aria-labelledby="title desc">
+<title id="title">hi, i'm tristan.</title>
+<desc id="desc">A little corner for things I'm figuring out. A pink and lavender orbit with small stars.</desc>
+<defs><clipPath id="clip"><rect width="1100" height="280" rx="24"/></clipPath><linearGradient id="wash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5D304E"/><stop offset="1" stop-color="#403058"/></linearGradient></defs>
+<g clip-path="url(#clip)">
+<rect width="1100" height="280" fill="#1D1728"/>
+<circle cx="1008" cy="95" r="237" fill="url(#wash)" opacity=".72"/>
+<circle cx="975" cy="126" r="128" fill="none" stroke="#796383" stroke-width="1.5"/>
+<ellipse cx="975" cy="126" rx="183" ry="72" transform="rotate(-31 975 126)" fill="none" stroke="#796383" stroke-width="1.5"/>
+<circle cx="857" cy="196" r="11" fill="#FF75B9"/>
+<circle cx="1028" cy="8" r="5" fill="#FF75B9"/>
+<path d="M923 96l5 16 16 5-16 5-5 16-5-16-16-5 16-5z" fill="#FF75B9"/>
+<path d="M1042 180l3 10 10 3-10 3-3 10-3-10-10-3 10-3z" fill="#CABBD9" opacity=".6"/>
+<path d="M804 62l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" fill="#FF75B9" opacity=".7"/>
+<circle cx="753" cy="216" r="3" fill="#FF75B9"/>
+<text x="62" y="70" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" letter-spacing="2.2" fill="#CABBD9">@TheDutchSmoke</text>
+<text x="58" y="158" font-family="DejaVu Sans, Arial, sans-serif" font-size="70" font-weight="700" letter-spacing="-3" fill="#FFF3FB">hi, i'm tristan<tspan fill="#FF75B9">.</tspan></text>
+<text x="62" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" fill="#CABBD9">a little corner for things I'm figuring out</text>
+</g>
+</svg>
