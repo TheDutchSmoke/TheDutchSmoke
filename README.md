@@ -5,8 +5,6 @@
 <p align="center">My background is in <b>domains, DNS and email</b>.<br>
 Outside that: self-hosting, websites, small tools and the occasional game.</p>
 
-<p align="center"><sub>build • host • tinker • repeat ✦</sub></p>
-
 <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg"><img src="./assets/divider-light.svg" alt="" width="100%"></picture>
 
 <h3 align="center">a few things from my corner 🌷</h3>
