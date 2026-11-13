@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="colourful sprinkles in a grid">
+<rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>
+<rect x="15" y="17.8" width="10" height="4.4" rx="2.2" fill="#D81779" transform="rotate(30 20 20)"/>
+<rect x="27" y="15.8" width="10" height="4.4" rx="2.2" fill="#9DCB7E" transform="rotate(-20 32 18)"/>
+<rect x="40" y="18.8" width="10" height="4.4" rx="2.2" fill="#8FB8F0" transform="rotate(60 45 21)"/>
+<rect x="14" y="30.8" width="10" height="4.4" rx="2.2" fill="#F7B955" transform="rotate(-50 19 33)"/>
+<rect x="27" y="29.8" width="10" height="4.4" rx="2.2" fill="#B98CE8" transform="rotate(15 32 32)"/>
+<rect x="40" y="31.8" width="10" height="4.4" rx="2.2" fill="#D81779" transform="rotate(-35 45 34)"/>
+<rect x="16" y="43.8" width="10" height="4.4" rx="2.2" fill="#8FB8F0" transform="rotate(70 21 46)"/>
+<rect x="28" y="42.8" width="10" height="4.4" rx="2.2" fill="#F5ADCF" transform="rotate(-10 33 45)"/>
+<rect x="40" y="43.8" width="10" height="4.4" rx="2.2" fill="#9DCB7E" transform="rotate(40 45 46)"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="two little players crossing a road">
+<rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>
+<rect x="8" y="26" width="48" height="18" fill="#B8A9D9"/>
+<path d="M11 35H53" stroke="#FFFBFE" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round"/>
+<rect x="16" y="12" width="14" height="14" rx="4" fill="#FFFBFE" stroke="#D81779" stroke-width="2"/>
+<circle cx="21" cy="18" r="1.6" fill="#502A49"/><circle cx="26" cy="18" r="1.6" fill="#502A49"/>
+<rect x="36" y="44" width="14" height="14" rx="4" fill="#F5ADCF" stroke="#D81779" stroke-width="2"/>
+<circle cx="41" cy="50" r="1.6" fill="#502A49"/><circle cx="46" cy="50" r="1.6" fill="#502A49"/>
+</svg>
