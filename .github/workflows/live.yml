@@ -28,6 +28,8 @@ jobs:
         run: node tools/profile.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # owner/repo of projects to leave off the profile; kept as a repository variable, out of the public code
+          PROFILE_HIDE: ${{ vars.PROFILE_HIDE }}
       - name: Commit when something changed
         if: github.event_name != 'pull_request'
         run: |

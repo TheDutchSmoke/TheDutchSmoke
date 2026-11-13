@@ -11,7 +11,6 @@ export const PROJECTS = [
   { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', short: 'browser game', long: 'a Crossy Road-style browser game for up to 20 players' },
   { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', short: 'colour gallery', long: 'a colourful gallery with seasonal themes' },
   { key: 'tv', name: 'SofaStream', url: 'https://github.com/TheDutchSmoke/sofastream', short: 'Twitch on TV', long: 'Twitch on the Apple TV, started from a macOS terminal' },
-  { key: 'elements', name: 'Elementen', url: 'https://github.com/TheDutchSmoke/elementen-resourcepack', short: 'Minecraft bending', long: 'a bending adventure for my own Minecraft server' },
   { key: 'console', name: 'myselfhosted.eu', url: 'https://myselfhosted.eu', short: 'pocket card', long: 'my pocket business card: a tiny handheld that boots into my accounts' },
 ];
 
@@ -29,6 +28,7 @@ const QUERY = `query($login: String!, $q: String!) {
       ... on PullRequest {
         title url number state merged mergedAt createdAt
         repository { nameWithOwner isPrivate owner { login } }
+        files(first: 100) { nodes { path additions deletions } }
       }
     }
   }
@@ -49,6 +49,44 @@ export async function fetchData(token) {
   return { ...json.data.user, pullRequests: { nodes: json.data.search.nodes.filter(n => n && n.url) } };
 }
 
+// Projects that stay off the profile: owner/repo, separated by commas or spaces. They come from the repository variable
+// PROFILE_HIDE, so the names are not in this public file.
+function hiddenRepos() {
+  return new Set((process.env.PROFILE_HIDE ?? '').split(/[\s,]+/).filter(Boolean).map(r => r.toLowerCase()));
+}
+
+// What a changed file is written in. Translation files only count when their path says Dutch (the translating I do);
+// other strings, docs, data and lock files are left out.
+const CODE = {
+  swift: 'Swift', rs: 'Rust', ts: 'TypeScript', tsx: 'TypeScript', js: 'JavaScript', jsx: 'JavaScript', mjs: 'JavaScript',
+  cjs: 'JavaScript', py: 'Python', kt: 'Kotlin', kts: 'Kotlin', go: 'Go', m: 'Objective-C', mm: 'Objective-C', c: 'C',
+  h: 'C', cc: 'C++', cpp: 'C++', hpp: 'C++', cs: 'C#', java: 'Java', rb: 'Ruby', php: 'PHP', lua: 'Lua', dart: 'Dart',
+  zig: 'Zig', sh: 'Shell', bash: 'Shell', zsh: 'Shell', html: 'HTML', css: 'CSS', scss: 'CSS', vue: 'Vue',
+  svelte: 'Svelte', astro: 'Astro',
+};
+const STRINGS = new Set(['po', 'json', 'xcstrings', 'strings', 'stringsdict', 'yml', 'yaml', 'ftl', 'arb', 'xliff', 'xlf', 'properties', 'resx']);
+const DUTCH = /(^|[/._-])(nl|nl[-_](nl|be)|dutch|nederlands)([/._-]|$)/i;
+export function languageOf(path) {
+  const file = path.split('/').pop();
+  const dot = file.lastIndexOf('.');
+  if (dot <= 0) return null;
+  const ext = file.slice(dot + 1).toLowerCase();
+  if (STRINGS.has(ext)) return DUTCH.test(path) ? 'Dutch' : null;
+  return CODE[ext] ?? null;
+}
+
+// Lines changed per language over the given pull requests, biggest first.
+function madeOf(nodes) {
+  const lines = new Map();
+  for (const p of nodes) for (const f of p.files?.nodes ?? []) {
+    const lang = languageOf(f.path);
+    if (lang) lines.set(lang, (lines.get(lang) ?? 0) + f.additions + f.deletions);
+  }
+  const total = [...lines.values()].reduce((a, b) => a + b, 0);
+  return [...lines].filter(([, n]) => n > 0).map(([name, n]) => ({ name, lines: n, share: n / total }))
+    .sort((a, b) => b.lines - a.lines);
+}
+
 // Turn the raw API answer into the few numbers and items the page shows. Public, external work only.
 export function summarize(user, today = new Date()) {
   const cal = user.contributionsCollection.contributionCalendar;
@@ -61,9 +99,12 @@ export function summarize(user, today = new Date()) {
   const lastActive = [...past].reverse().find(d => d.n > 0)?.date ?? null;
   const daysSince = lastActive ? Math.round((Date.parse(todayIso) - Date.parse(lastActive)) / 864e5) : null;
 
-  const prs = user.pullRequests.nodes
+  const hide = hiddenRepos();
+  const shown = user.pullRequests.nodes
     .filter(p => !p.repository.isPrivate && p.repository.owner.login.toLowerCase() !== LOGIN.toLowerCase())
-    .filter(p => p.merged || p.state === 'OPEN')
+    .filter(p => !hide.has(p.repository.nameWithOwner.toLowerCase()))
+    .filter(p => p.merged || p.state === 'OPEN');
+  const prs = shown
     .map(p => ({
       repo: p.repository.nameWithOwner, number: p.number, title: p.title.trim(), url: p.url,
       status: p.merged ? 'merged' : 'open', date: (p.merged ? p.mergedAt : p.createdAt).slice(0, 10),
@@ -86,6 +127,8 @@ export function summarize(user, today = new Date()) {
     open: prs.filter(p => p.status === 'open').length,
     repos: new Set(prs.map(p => p.repo)).size,
     prs,
+    // what those pull requests are made of
+    made: madeOf(shown),
   };
 }
 

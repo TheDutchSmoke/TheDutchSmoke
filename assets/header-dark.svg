@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-labelledby="t d">
-<title id="t">hi, i'm TheDutchSmoke.</title><desc id="d">A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with 7 blossoms: one for roughly every active day this month. The line under the name cycles through: welcome to my little corner ♡, self-hosting little things, making small tools, playing the occasional game.</desc>
+<title id="t">hi, i'm TheDutchSmoke.</title><desc id="d">A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with 7 blossoms: the more days I was active in the last month, the more it blooms. The line under the name cycles through: welcome to my little corner ♡, self-hosting little things, making small tools, playing the occasional game.</desc>
 <defs>
 <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#291E31"/><stop offset="1" stop-color="#33244A"/></linearGradient>
 <clipPath id="clip"><rect x="1" y="1" width="1098" height="298" rx="26"/></clipPath>

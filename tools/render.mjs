@@ -1,5 +1,6 @@
 // Version A: "my little corner". The pink browser window with the heart-faced computer, refined, plus a desk plant
-// whose blossoms follow the number of active days in the last 30 days.
+// whose blossoms follow the number of active days in the last 30 days, a row of pots for the last 12 weeks and a jam
+// jar of what my pull requests are made of.
 import { esc, fontFace, write, plural, clip, PROJECTS, helpedLinks, MONTHS } from './lib.mjs';
 
 const THEMES = {
@@ -76,7 +77,7 @@ function computer(t) {
 
 function header(root, t, s) {
   const blooms = Math.min(SLOTS.length, Math.round((s.active30 * SLOTS.length) / 15));
-  const desc = `A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with ${plural(blooms, 'blossom', 'blossoms')}: one for roughly every active day this month. The line under the name cycles through: ${PHRASES.join(', ')}.`;
+  const desc = `A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with ${plural(blooms, 'blossom', 'blossoms')}: the more days I was active in the last month, the more it blooms. The line under the name cycles through: ${PHRASES.join(', ')}.`;
   return {
     blooms,
     svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-labelledby="t d">
@@ -146,10 +147,6 @@ const ART = {
 <rect x="15" y="22" width="34" height="21" rx="4" fill="#FFFBFE"/>
 <path d="M29 27.5V37.5L37.5 32.5Z" fill="#D81779" stroke="#D81779" stroke-width="1.5" stroke-linejoin="round"/>
 <path d="M18 48L15 54M46 48L49 54" stroke="#C9B6EE" stroke-width="2.4" stroke-linecap="round"/>`,
-  elements: `<path d="M21 11C25 17 29 19 28 25C27.5 29 24.5 31.5 21 31.5C17 31.5 14 28.5 14.5 24.5C15 21 18 19.5 18 16C20 18 21 15 21 11Z" fill="#D81779"/>
-<path d="M43 11C47 17 50 21 50 25C50 29 47 32 43 32C39 32 36 29 36 25C36 21 39 17 43 11Z" fill="#8FB8F0"/>
-<ellipse cx="21" cy="44" rx="9" ry="5" transform="rotate(-38 21 44)" fill="#9DCB7E"/><path d="M15 50L27 38" stroke="#FFFBFE" stroke-width="1.4"/>
-<path d="M34 40H46C49 40 50 37 48 35M34 46H50C53 46 54 49 52 51M34 52H42" fill="none" stroke="#B98CE8" stroke-width="2.6" stroke-linecap="round"/>`,
   console: `<rect x="15" y="9" width="34" height="47" rx="8" fill="#F5ADCF" stroke="#D81779" stroke-width="2"/>
 <rect x="20" y="14" width="24" height="18" rx="3" fill="#FFFBFE"/>
 <path d="M32 26C31 25 28 23 28 21C28 19 30.5 18.5 32 20.5C33.5 18.5 36 19 36 21C36 23 33 25 32 26Z" fill="#D81779"/>
@@ -200,6 +197,120 @@ ${items.join('\n')}
 </svg>`;
 }
 
+// What my pull requests in other people's projects are made of: a jam jar with one layer per language, biggest on top,
+// so the whole jar is 100%. Languages too small for a layer lie on top as sprinkles. Layer colours follow the language
+// (checked for colour-blind separation per theme); a fourth, unknown language gets the spare colour.
+const LAYER = {
+  light: { Swift: '#D9478F', Dutch: '#E9892B', Rust: '#7F63D8', other: '#2B9ABF' },
+  dark: { Swift: '#D0488E', Dutch: '#D27D2B', Rust: '#8566D6', other: '#2F95C0' },
+};
+const NOTE = { Dutch: 'my translations' };
+const SPRINKLES = ['#9DCB7E', '#8FB8F0', '#F7B955', '#B98CE8', '#FFFBFE', '#F5ADCF'];
+const JAR = 'M126 86V96C126 112 82 112 82 140V268Q82 300 114 300H226Q258 300 258 268V140C258 112 214 112 214 96V86Z';
+const pct = share => `${Math.max(1, Math.round(share * 100))}%`;
+const listNames = names => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`;
+
+export function jarParts(s) {
+  const layers = [];
+  let spare = true;
+  for (const m of s.made) {
+    if (m.share < 0.03 || layers.length === 4) continue;
+    if (LAYER.light[m.name]) layers.push(m);
+    else if (spare) { spare = false; layers.push({ ...m, spare: true }); }
+  }
+  const rest = s.made.filter(m => !layers.some(l => l.name === m.name) && m.lines >= 25).map(m => m.name);
+  const pinch = rest.length > 2 ? [...rest.slice(0, 2), 'more'] : rest;
+  return { layers, pinch };
+}
+
+function jar(root, t, mode, s) {
+  const { layers, pinch } = jarParts(s);
+  const glass = mode === 'light' ? '#FFF7FB' : '#231A2B';
+  const top = 152, bottom = 300, total = layers.reduce((a, l) => a + l.share, 0);
+  const wave = (y, k) => {
+    let d = `M60 ${y.toFixed(1)}`;
+    for (let x = 60, i = k; x < 280; x += 22, i++) d += `Q${x + 11} ${(y + (i % 2 ? 3 : -3)).toFixed(1)} ${x + 22} ${y.toFixed(1)}`;
+    return `${d}V310H60Z`;
+  };
+  let y = top;
+  const bands = layers.map((l, i) => {
+    const h = ((bottom - top) * l.share) / total, b = { ...l, y0: y, mid: y + h / 2, color: LAYER[mode][l.spare ? 'other' : l.name], i };
+    y += h;
+    return b;
+  });
+  // painted top layer first, each reaching down to the bottom, so every lower layer covers the one above it
+  const fills = bands.map(b => `<path class="pour" style="animation-delay:${(0.25 + (bands.length - 1 - b.i) * 0.55).toFixed(2)}s" d="${wave(b.y0, b.i)}" fill="${b.color}" stroke="${b.i ? glass : '#FFFFFF'}" stroke-opacity="${b.i ? 1 : 0.55}" stroke-width="2.5"/>`).join('\n');
+  const after = 0.25 + bands.length * 0.55;
+  const sprinkles = pinch.length ? [[108, 146, 30], [124, 150, -40], [141, 145, 70], [158, 150, 10], [176, 146, -60], [192, 151, 45], [209, 146, -20], [226, 150, 80]]
+    .map(([x, yy, a], i) => `<g transform="translate(${x} ${yy}) rotate(${a})"><rect class="pop" style="animation-delay:${(after + i * 0.07).toFixed(2)}s" x="-4.5" y="-1.8" width="9" height="3.6" rx="1.8" fill="${SPRINKLES[i % SPRINKLES.length]}"/></g>`).join('') : '';
+
+  // labels to the right, nudged apart when layers are thin; the pinch line sits above the top layer
+  const items = [
+    ...(pinch.length ? [{ want: 124, h: 46, pinch: true }] : []),
+    ...bands.map(b => ({ want: b.mid, h: NOTE[b.name] ? 50 : 30, b })),
+  ];
+  let floor = 44;
+  for (const it of items) { it.y = Math.max(it.want - it.h / 2, floor); floor = it.y + it.h + 6; }
+  const over = floor - 6 - 316;
+  if (over > 0) for (const it of items) it.y -= over;
+  const labels = items.map(it => {
+    const cy = it.y + (it.pinch ? 12 : 15);
+    if (it.pinch) return `<path d="M240 147Q262 ${cy} 284 ${cy.toFixed(1)}" fill="none" stroke="${t.line}" stroke-width="2" stroke-linecap="round"/>
+<text class="note" x="294" y="${(cy + 6.5).toFixed(1)}" fill="${t.muted}">+ a pinch of</text>
+<text class="note" x="294" y="${(cy + 29.5).toFixed(1)}" fill="${t.muted}">${esc(listNames(pinch))}</text>`;
+    const b = it.b;
+    return `<circle cx="266" cy="${b.mid.toFixed(1)}" r="3" fill="${t.line}"/><path d="M266 ${b.mid.toFixed(1)}L280 ${cy.toFixed(1)}H286" fill="none" stroke="${t.line}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text class="lab" x="294" y="${(cy + 9).toFixed(1)}" fill="${t.ink}">${esc(b.name)}<tspan class="pct" dx="10" fill="${t.muted}">${pct(b.share)}</tspan></text>${NOTE[b.name] ? `
+<text class="note" x="294" y="${(cy + 33).toFixed(1)}" fill="${t.muted}">${esc(NOTE[b.name])}</text>` : ''}`;
+  });
+  if (!bands.length) labels.push(`<text class="lab" x="294" y="230" fill="${t.muted}">still empty ♡</text>`);
+
+  const scallops = Array.from({ length: 12 }, (_, i) => `Q${236 - i * 11 - 5.5} 95 ${236 - (i + 1) * 11} 87`).join('');
+  const said = bands.map(b => `${b.name}${NOTE[b.name] ? ` (${NOTE[b.name]})` : ''} ${pct(b.share)}`).join(', ');
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="286" viewBox="50 36 500 286" role="img" aria-labelledby="t d">
+<title id="t">what my pull requests are made of</title><desc id="d">${esc(`A jam jar in layers, one per language, by lines changed: ${said || 'nothing yet'}${pinch.length ? `, with a pinch of ${listNames(pinch)} on top` : ''}.`)}</desc>
+<defs>
+<clipPath id="in"><path d="${JAR}"/></clipPath>
+<pattern id="cloth" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="${t.chrome}"/><rect width="6" height="12" fill="${t.soft}" opacity=".5"/><rect width="12" height="6" fill="${t.soft}" opacity=".5"/></pattern>
+</defs>
+<style>
+${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}
+${fontFace(root, 'Zen Maru Black', 'zen-maru-black.woff2', 900)}
+.lab{font-family:'Zen Maru Bold',sans-serif;font-size:26px}.pct{font-family:'Zen Maru Black',sans-serif}
+.note{font-family:'Zen Maru Bold',sans-serif;font-size:19px}.tagt{font-family:'Zen Maru Bold',sans-serif;font-size:16px}
+.pour{transform-origin:170px 300px;animation:pour 1.1s cubic-bezier(.3,1.25,.5,1) both}
+.pop{transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.3,1.6,.5,1) both}
+.tag{transform-origin:170px 90px;animation:swing 7s ease-in-out infinite}
+@keyframes pour{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes swing{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@media (prefers-reduced-motion:reduce){.pour,.pop,.tag{animation:none}}
+</style>
+<ellipse cx="170" cy="304" rx="98" ry="7" fill="${t.shade}" opacity=".5"/>
+<path d="${JAR}" fill="${glass}"/>
+<g clip-path="url(#in)">
+${fills}
+<rect x="95" y="128" width="9" height="122" rx="4.5" fill="#FFFFFF" opacity="${mode === 'light' ? 0.5 : 0.14}"/>
+<rect x="95" y="260" width="9" height="12" rx="4.5" fill="#FFFFFF" opacity="${mode === 'light' ? 0.5 : 0.14}"/>
+</g>
+${sprinkles}
+<path d="${JAR}" fill="none" stroke="${t.line}" stroke-width="3" stroke-linejoin="round"/>
+<path d="M104 87C104 47 236 47 236 87${scallops}Z" fill="url(#cloth)" stroke="${t.line}" stroke-width="2" stroke-linejoin="round"/>
+<rect x="122" y="84" width="96" height="9" rx="3" fill="${t.accent}"/>
+<g class="tag">
+<path d="M170 90C150 104 126 106 112 118" fill="none" stroke="${t.muted}" stroke-width="1.6"/>
+<g transform="translate(96 136) rotate(-12)"><path d="M-30 -14H22L32 0L22 14H-30Q-34 14-34 10V-10Q-34 -14-30 -14Z" fill="${t.face}" stroke="${t.line}" stroke-width="2" stroke-linejoin="round"/><circle cx="23" cy="0" r="2.6" fill="${t.line}"/>
+<text class="tagt" x="-6" y="5.5" text-anchor="middle" fill="${t.ink}">my PRs</text></g>
+</g>
+<g transform="translate(170 89) scale(0.62)" fill="${t.chrome}" stroke="${t.accent}" stroke-width="3" stroke-linejoin="round">
+<path d="M0 0C-17-23-43-19-36 1C-30 13-9 10 0 0ZM0 0C17-23 43-19 36 1C30 13 9 10 0 0Z"/>
+<path d="M-3 2L-20 30L-6 26L-2 34L6 3M4 3L20 30L25 21L35 23L11-2"/>
+<ellipse rx="7" ry="8"/>
+</g>
+${labels.join('\n')}
+</svg>`;
+}
+
 const ICONS = {
   'heart-merged': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-13 -13 26 26" role="img" aria-label="merged"><path d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#D81779"/></svg>`,
   'heart-open': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-13 -13 26 26" role="img" aria-label="open"><path d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="none" stroke="#D81779" stroke-width="2.6" stroke-linejoin="round"/></svg>`,
@@ -220,12 +331,13 @@ export function render(root, s) {
     write(root, `assets/header-${mode}.svg`, h.svg);
     write(root, `assets/divider-${mode}.svg`, divider(t));
     write(root, `assets/pots-${mode}.svg`, pots(root, t, s));
+    write(root, `assets/jar-${mode}.svg`, jar(root, t, mode, s));
     for (const p of PROJECTS) write(root, `assets/app-${p.key}-${mode}.svg`, appIcon(root, t, p));
   }
   for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
 
   const stats = `<p align="center"><sub>${[
-    `<b>${s.active30}</b> active days this month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
+    `<b>${s.active30}</b> active days in the last month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
     `<b>${s.year}</b> contributions this year`,
     `<b>${s.merged}</b> pull requests merged in other people's projects`,
   ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
@@ -234,6 +346,12 @@ export function render(root, s) {
   const list = s.prs.slice(0, 4).map(p =>
     `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 60))}`,
   ).join('<br>\n');
-  const lately = `<p align="center">I also like helping out in other people's projects: ${helpedLinks(s)}.</p>\n<p align="center"><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>\n${list}\n</p>`;
+  const { layers, pinch } = jarParts(s);
+  const jarAlt = `A jam jar in layers showing what my pull requests are made of, by lines changed: ${layers.map(l => `${l.name}${NOTE[l.name] ? ` (${NOTE[l.name]})` : ''} ${pct(l.share)}`).join(', ') || 'still empty'}${pinch.length ? `, with a pinch of ${listNames(pinch)} on top` : ''}.`;
+  const lately = [
+    `<p align="center">I also like helping out in other people's projects: ${helpedLinks(s)}.</p>`,
+    `<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/jar-dark.svg"><img src="assets/jar-light.svg" width="380" alt="${esc(jarAlt)}"></picture><br>\n<sub>what those pull requests are made of, counted in changed lines</sub></p>`,
+    `<p align="center"><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>\n${list}\n</p>`,
+  ].join('\n\n');
   return { stats, apps, lately };
 }
