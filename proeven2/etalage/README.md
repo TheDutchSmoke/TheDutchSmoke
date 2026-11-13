@@ -1,5 +1,5 @@
 <!-- live:header -->
-<picture><source media="(prefers-color-scheme: dark) and (max-width: 520px)" srcset="assets/header-narrow-dark.svg"><source media="(max-width: 520px)" srcset="assets/header-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg"><img src="assets/header-light.svg" width="100%" alt="TheDutchSmoke. I run a couple of small servers and fill them with things I made. Busy on 21 of the last 30 days; 7 pull requests merged, 9 still waiting."></picture>
+<picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/header-narrow-dark.svg"><source media="(max-width: 600px)" srcset="assets/header-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg"><img src="assets/header-light.svg" width="100%" alt="TheDutchSmoke. I run a couple of small servers and fill them with things I made. Busy on 21 of the last 30 days; 7 pull requests merged, 9 still waiting."></picture>
 <!-- /live:header -->
 
 <!-- live:tiles -->
