@@ -49,8 +49,8 @@ export async function fetchData(token) {
   return { ...json.data.user, pullRequests: { nodes: json.data.search.nodes.filter(n => n && n.url) } };
 }
 
-// Projects that stay off the profile: owner/repo, separated by commas or spaces. They come from the repository variable
-// PROFILE_HIDE, so the names are not in this public file.
+// Projects that stay off the profile: owner/repo, separated by commas or spaces. They come from the repository secret
+// PROFILE_HIDE, so the names stay out of this public file and the workflow logs.
 function hiddenRepos() {
   return new Set((process.env.PROFILE_HIDE ?? '').split(/[\s,]+/).filter(Boolean).map(r => r.toLowerCase()));
 }
