@@ -339,7 +339,7 @@ export function render(root, s) {
   const stats = `<p align="center"><sub>${[
     `<b>${s.active30}</b> active days in the last month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
     `<b>${s.year}</b> contributions in the last year`,
-    `<b>${s.merged}</b> pull requests merged in other people's projects`,
+    `<b>${s.merged}</b> ${s.merged === 1 ? 'pull request' : 'pull requests'} merged${s.open ? ` and <b>${s.open}</b> still waiting` : ''} in other people's projects`,
   ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
   const apps = `<p align="center">${PROJECTS.map(p =>
     `<a href="${p.url}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-${p.key}-dark.svg"><img src="assets/app-${p.key}-light.svg" width="110" alt="${esc(p.name)}: ${esc(p.long)}"></picture></a>`).join('&nbsp;')}</p>`;
