@@ -30,4 +30,4 @@ I run a couple of small servers, build tools and games for fun, and now and then
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg"><img src="assets/divider-light.svg" width="100%" alt=""></picture>
 
-<p align="center"><sub>say hi: <a href="https://myselfhosted.eu">myselfhosted.eu</a> ♡ &nbsp;·&nbsp; the pictures and numbers here update themselves every morning</sub></p>
+<p align="center"><sub>say hi: <a href="https://myselfhosted.eu">myselfhosted.eu</a> ♡</sub></p>
