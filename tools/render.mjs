@@ -1,6 +1,6 @@
 // Version A: "my little corner". The pink browser window with the heart-faced computer, refined, plus a desk plant
 // whose blossoms follow the number of active days in the last 30 days.
-import { esc, fontFace, write, plural, clip } from './lib.mjs';
+import { esc, fontFace, write, plural, clip, PROJECTS, helpedLinks, MONTHS } from './lib.mjs';
 
 const THEMES = {
   light: {
@@ -141,18 +141,62 @@ const ART = {
     [20, 20, 30, '#D81779'], [32, 18, -20, '#9DCB7E'], [45, 21, 60, '#8FB8F0'], [19, 33, -50, '#F7B955'], [32, 32, 15, '#B98CE8'],
     [45, 34, -35, '#D81779'], [21, 46, 70, '#8FB8F0'], [33, 45, -10, '#F5ADCF'], [45, 46, 40, '#9DCB7E'],
   ].map(([x, y, a, c]) => `<rect x="${x - 5}" y="${y - 2.2}" width="10" height="4.4" rx="2.2" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join('\n'),
+  tv: `<path d="M26 17L20 9M38 17L44 9" stroke="#C9B6EE" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="9" r="2.4" fill="#D81779"/><circle cx="44" cy="9" r="2.4" fill="#D81779"/>
+<rect x="10" y="17" width="44" height="31" rx="7" fill="#F1E9FF" stroke="#C9B6EE" stroke-width="2"/>
+<rect x="15" y="22" width="34" height="21" rx="4" fill="#FFFBFE"/>
+<path d="M29 27.5V37.5L37.5 32.5Z" fill="#D81779" stroke="#D81779" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M18 48L15 54M46 48L49 54" stroke="#C9B6EE" stroke-width="2.4" stroke-linecap="round"/>`,
+  elements: `<path d="M21 11C25 17 29 19 28 25C27.5 29 24.5 31.5 21 31.5C17 31.5 14 28.5 14.5 24.5C15 21 18 19.5 18 16C20 18 21 15 21 11Z" fill="#D81779"/>
+<path d="M43 11C47 17 50 21 50 25C50 29 47 32 43 32C39 32 36 29 36 25C36 21 39 17 43 11Z" fill="#8FB8F0"/>
+<ellipse cx="21" cy="44" rx="9" ry="5" transform="rotate(-38 21 44)" fill="#9DCB7E"/><path d="M15 50L27 38" stroke="#FFFBFE" stroke-width="1.4"/>
+<path d="M34 40H46C49 40 50 37 48 35M34 46H50C53 46 54 49 52 51M34 52H42" fill="none" stroke="#B98CE8" stroke-width="2.6" stroke-linecap="round"/>`,
+  console: `<rect x="15" y="9" width="34" height="47" rx="8" fill="#F5ADCF" stroke="#D81779" stroke-width="2"/>
+<rect x="20" y="14" width="24" height="18" rx="3" fill="#FFFBFE"/>
+<path d="M32 26C31 25 28 23 28 21C28 19 30.5 18.5 32 20.5C33.5 18.5 36 19 36 21C36 23 33 25 32 26Z" fill="#D81779"/>
+<rect x="21" y="41" width="10" height="3.6" rx="1.2" fill="#502A49"/><rect x="24.2" y="37.8" width="3.6" height="10" rx="1.2" fill="#502A49"/>
+<circle cx="39" cy="40" r="2.8" fill="#FFFBFE"/><circle cx="44" cy="45" r="2.8" fill="#FFFBFE"/>`,
 };
-export const APPS = [
-  { key: 'map', name: 'Incidentenkaart', url: 'https://incidentenkaart.nl', alt: 'Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources' },
-  { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', alt: 'Crossy Rivals: a Crossy Road-style browser game for up to 20 players at once' },
-  { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', alt: 'SprinkleGrid: a colourful gallery experiment with seasonal themes' },
-];
-function appIcon(root, t, app) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="${esc(app.name)}">
-<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.l{font-family:'Zen Maru Bold',sans-serif;font-size:18px;letter-spacing:-.3px}</style>
+function appIcon(root, t, p) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="172" viewBox="0 0 150 172" role="img" aria-label="${esc(p.name)}: ${esc(p.short)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.l{font-family:'Zen Maru Bold',sans-serif;font-size:18px;letter-spacing:-.3px}.s{font-size:15px;letter-spacing:0}</style>
 <ellipse cx="75" cy="106" rx="40" ry="5" fill="${t.shade}" opacity=".55"/>
-<g transform="translate(27 6) scale(1.5)"><rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>${ART[app.key]}</g>
-<text class="l" x="75" y="136" text-anchor="middle" fill="${t.ink}">${esc(app.name)}</text>
+<g transform="translate(27 6) scale(1.5)"><rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>${ART[p.key]}</g>
+<text class="l" x="75" y="136" text-anchor="middle" fill="${t.ink}">${esc(p.name)}</text>
+<text class="l s" x="75" y="158" text-anchor="middle" fill="${t.muted}">${esc(p.short)}</text>
+</svg>`;
+}
+
+// The last 12 weeks as a row of little pots on a shelf: the busier the week, the taller the plant and the more it blooms.
+function pots(root, t, s) {
+  const w = s.weekly, n = w.length, x0 = 110, step = (1100 - 2 * x0) / (n - 1);
+  let lastMonth = '';
+  const items = w.map((wk, i) => {
+    const x = x0 + i * step, h = wk.n ? Math.min(78, 16 + 17 * Math.log2(1 + wk.n)) : 0;
+    const blooms = wk.n === 0 ? 0 : wk.n <= 2 ? 1 : wk.n <= 9 ? 2 : 3;
+    const month = MONTHS[Number(wk.start.slice(5, 7)) - 1];
+    const label = month !== lastMonth ? `<text class="m" x="${x.toFixed(1)}" y="196" text-anchor="middle" fill="${t.muted}">${month}</text>` : '';
+    lastMonth = month;
+    const top = 150 - h;
+    const flowers = [[0, top, 9], [-11, top + h * 0.35, 7], [11, top + h * 0.55, 6]].slice(0, blooms)
+      .map(([dx, y, r], k) => `<g transform="translate(${(x + dx).toFixed(1)} ${y.toFixed(1)})"><g class="bloom" style="animation-delay:${(0.5 + i * 0.12 + k * 0.15).toFixed(2)}s" fill="${t.soft}">${blossom(t, r)}</g></g>`).join('');
+    const plant = h ? `<g class="grow" style="animation-delay:${(i * 0.12).toFixed(2)}s;transform-origin:${x.toFixed(1)}px 150px">
+<path d="M${x.toFixed(1)} 150V${top.toFixed(1)}" stroke="${t.leafDeep}" stroke-width="2.6" stroke-linecap="round"/>
+<ellipse cx="${(x - 7).toFixed(1)}" cy="${(150 - h * 0.45).toFixed(1)}" rx="8" ry="3.6" transform="rotate(-30 ${(x - 7).toFixed(1)} ${(150 - h * 0.45).toFixed(1)})" fill="${t.leaf}"/>
+<ellipse cx="${(x + 7).toFixed(1)}" cy="${(150 - h * 0.7).toFixed(1)}" rx="8" ry="3.6" transform="rotate(30 ${(x + 7).toFixed(1)} ${(150 - h * 0.7).toFixed(1)})" fill="${t.leaf}"/>
+${flowers}</g>` : `<circle cx="${(x - 4).toFixed(1)}" cy="148" r="1.6" fill="${t.leafDeep}"/><circle cx="${(x + 3).toFixed(1)}" cy="147" r="1.4" fill="${t.leafDeep}"/>`;
+    return `${plant}
+<path d="M${(x - 20).toFixed(1)} 152H${(x + 20).toFixed(1)}L${(x + 15).toFixed(1)} 176H${(x - 15).toFixed(1)}Z" fill="${i % 2 ? t.pot : t.soft}"/>
+<rect x="${(x - 23).toFixed(1)}" y="146" width="46" height="9" rx="4.5" fill="${i % 2 ? t.potRim : t.line}"/>${label}`;
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="156" viewBox="0 50 1100 156" role="img" aria-label="${esc(`My last 12 weeks as a row of pots, one per week: ${w.map(x => x.n).join(', ')} contributions.`)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.m{font-family:'Zen Maru Bold',sans-serif;font-size:17px}
+.grow{animation:grow 1.2s cubic-bezier(.3,1.3,.5,1) both}
+.bloom{transform-box:fill-box;transform-origin:center;animation:bloom .9s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes bloom{from{transform:scale(0)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.grow,.bloom{animation:none}}</style>
+<path d="M60 177H1040" stroke="${t.line}" stroke-width="3" stroke-linecap="round"/>
+${items.join('\n')}
 </svg>`;
 }
 
@@ -175,17 +219,21 @@ export function render(root, s) {
     blooms = h.blooms;
     write(root, `assets/header-${mode}.svg`, h.svg);
     write(root, `assets/divider-${mode}.svg`, divider(t));
-    for (const app of APPS) write(root, `assets/app-${app.key}-${mode}.svg`, appIcon(root, t, app));
+    write(root, `assets/pots-${mode}.svg`, pots(root, t, s));
+    for (const p of PROJECTS) write(root, `assets/app-${p.key}-${mode}.svg`, appIcon(root, t, p));
   }
   for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
 
   const stats = `<p align="center"><sub>${[
     `<b>${s.active30}</b> active days this month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
     `<b>${s.year}</b> contributions this year`,
+    `<b>${s.merged}</b> pull requests merged in other people's projects`,
   ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
+  const apps = `<p align="center">${PROJECTS.map(p =>
+    `<a href="${p.url}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-${p.key}-dark.svg"><img src="assets/app-${p.key}-light.svg" width="110" alt="${esc(p.name)}: ${esc(p.long)}"></picture></a>`).join('&nbsp;')}</p>`;
   const list = s.prs.slice(0, 4).map(p =>
     `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 60))}`,
   ).join('<br>\n');
-  const lately = `<p align="center"><sub>${s.merged} pull requests merged in other people's projects so far, ${s.open} still waiting. The newest (filled heart = merged):</sub></p>\n<p align="center">\n${list}\n</p>`;
-  return { stats, lately };
+  const lately = `<p align="center">I also like helping out in other people's projects: ${helpedLinks(s)}.</p>\n<p align="center"><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>\n${list}\n</p>`;
+  return { stats, apps, lately };
 }
