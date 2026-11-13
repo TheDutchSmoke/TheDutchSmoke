@@ -163,6 +163,24 @@ function appIcon(root, t, p) {
 </svg>`;
 }
 
+// A small window in the header's style (soft gradient, chrome bar with three dots), so the parts below the header read
+// as windows on the same little desktop instead of loose pictures.
+const WINDOW_CSS = `.wt{font-family:'Zen Maru Bold',sans-serif;font-size:21px}.ws{font-family:'Zen Maru Bold',sans-serif;font-size:17px}`;
+function frame(t, w, h, rx, title, sub, body) {
+  return `<defs><linearGradient id="wbg" x2="1" y2="1"><stop stop-color="${t.bg1}"/><stop offset="1" stop-color="${t.bg2}"/></linearGradient>
+<clipPath id="wclip"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath></defs>
+<g clip-path="url(#wclip)">
+<rect width="${w}" height="${h}" fill="url(#wbg)"/>
+<rect width="${w}" height="44" fill="${t.chrome}"/>
+<path d="M0 44H${w}" stroke="${t.line}"/>
+<circle cx="28" cy="22" r="5" fill="${t.accent}"/><circle cx="46" cy="22" r="5" fill="${t.soft}"/><circle cx="64" cy="22" r="5" fill="${t.line}"/>
+<text class="wt" x="86" y="29" fill="${t.ink}">${esc(title)}</text>
+${sub ? `<text class="ws" x="${w - 26}" y="29" text-anchor="end" fill="${t.muted}">${esc(sub)}</text>` : ''}
+${body}
+</g>
+<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}" fill="none" stroke="${t.line}" stroke-width="2"/>`;
+}
+
 // The last 12 weeks as a row of little pots on a shelf: the busier the week, the taller the plant and the more it blooms.
 function pots(root, t, s) {
   const w = s.weekly, n = w.length, x0 = 110, step = (1100 - 2 * x0) / (n - 1);
@@ -185,15 +203,17 @@ ${flowers}</g>` : `<circle cx="${(x - 4).toFixed(1)}" cy="148" r="1.6" fill="${t
 <path d="M${(x - 20).toFixed(1)} 152H${(x + 20).toFixed(1)}L${(x + 15).toFixed(1)} 176H${(x - 15).toFixed(1)}Z" fill="${i % 2 ? t.pot : t.soft}"/>
 <rect x="${(x - 23).toFixed(1)}" y="146" width="46" height="9" rx="4.5" fill="${i % 2 ? t.potRim : t.line}"/>${label}`;
   });
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="156" viewBox="0 50 1100 156" role="img" aria-label="${esc(`My last 12 weeks as a row of pots, one per week: ${w.map(x => x.n).join(', ')} contributions.`)}">
-<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.m{font-family:'Zen Maru Bold',sans-serif;font-size:17px}
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="272" viewBox="0 0 1100 272" role="img" aria-label="${esc(`My last 12 weeks as a row of pots, one per week, the busier the week the taller the plant: ${w.map(x => x.n).join(', ')} contributions.`)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.m{font-family:'Zen Maru Bold',sans-serif;font-size:17px}${WINDOW_CSS}
 .grow{animation:grow 1.2s cubic-bezier(.3,1.3,.5,1) both}
 .bloom{transform-box:fill-box;transform-origin:center;animation:bloom .9s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes bloom{from{transform:scale(0)}to{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.grow,.bloom{animation:none}}</style>
+${frame(t, 1100, 272, 26, 'my last 12 weeks', 'one pot per week: the busier the week, the taller the plant', `<g transform="translate(0 44)">
 <path d="M60 177H1040" stroke="${t.line}" stroke-width="3" stroke-linecap="round"/>
 ${items.join('\n')}
+</g>`)}
 </svg>`;
 }
 
@@ -267,7 +287,7 @@ function jar(root, t, mode, s) {
 
   const scallops = Array.from({ length: 12 }, (_, i) => `Q${236 - i * 11 - 5.5} 95 ${236 - (i + 1) * 11} 87`).join('');
   const said = bands.map(b => `${b.name}${NOTE[b.name] ? ` (${NOTE[b.name]})` : ''} ${pct(b.share)}`).join(', ');
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="286" viewBox="50 36 500 286" role="img" aria-labelledby="t d">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="540" height="362" viewBox="0 0 540 362" role="img" aria-labelledby="t d">
 <title id="t">what my pull requests are made of</title><desc id="d">${esc(`A jam jar in layers, one per language, by lines changed: ${said || 'nothing yet'}${pinch.length ? `, with a pinch of ${listNames(pinch)} on top` : ''}.`)}</desc>
 <defs>
 <clipPath id="in"><path d="${JAR}"/></clipPath>
@@ -277,7 +297,7 @@ function jar(root, t, mode, s) {
 ${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}
 ${fontFace(root, 'Zen Maru Black', 'zen-maru-black.woff2', 900)}
 .lab{font-family:'Zen Maru Bold',sans-serif;font-size:26px}.pct{font-family:'Zen Maru Black',sans-serif}
-.note{font-family:'Zen Maru Bold',sans-serif;font-size:19px}.tagt{font-family:'Zen Maru Bold',sans-serif;font-size:16px}
+.note{font-family:'Zen Maru Bold',sans-serif;font-size:19px}${WINDOW_CSS}
 .pour{transform-origin:170px 300px;animation:pour 1.1s cubic-bezier(.3,1.25,.5,1) both}
 .pop{transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.3,1.6,.5,1) both}
 .tag{transform-origin:170px 90px;animation:swing 7s ease-in-out infinite}
@@ -286,6 +306,7 @@ ${fontFace(root, 'Zen Maru Black', 'zen-maru-black.woff2', 900)}
 @keyframes swing{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
 @media (prefers-reduced-motion:reduce){.pour,.pop,.tag{animation:none}}
 </style>
+${frame(t, 540, 362, 22, 'what my PRs are made of', 'by lines changed', `<g transform="translate(-30 22)">
 <ellipse cx="170" cy="304" rx="98" ry="7" fill="${t.shade}" opacity=".5"/>
 <path d="${JAR}" fill="${glass}"/>
 <g clip-path="url(#in)">
@@ -300,7 +321,7 @@ ${sprinkles}
 <g class="tag">
 <path d="M170 90C150 104 126 106 112 118" fill="none" stroke="${t.muted}" stroke-width="1.6"/>
 <g transform="translate(96 136) rotate(-12)"><path d="M-30 -14H22L32 0L22 14H-30Q-34 14-34 10V-10Q-34 -14-30 -14Z" fill="${t.face}" stroke="${t.line}" stroke-width="2" stroke-linejoin="round"/><circle cx="23" cy="0" r="2.6" fill="${t.line}"/>
-<text class="tagt" x="-6" y="5.5" text-anchor="middle" fill="${t.ink}">my PRs</text></g>
+<g transform="translate(-6 0) scale(0.62)">${heart(t.accent)}</g></g>
 </g>
 <g transform="translate(170 89) scale(0.62)" fill="${t.chrome}" stroke="${t.accent}" stroke-width="3" stroke-linejoin="round">
 <path d="M0 0C-17-23-43-19-36 1C-30 13-9 10 0 0ZM0 0C17-23 43-19 36 1C30 13 9 10 0 0Z"/>
@@ -308,6 +329,7 @@ ${sprinkles}
 <ellipse rx="7" ry="8"/>
 </g>
 ${labels.join('\n')}
+</g>`)}
 </svg>`;
 }
 
@@ -342,16 +364,17 @@ export function render(root, s) {
     `<b>${s.year}</b> contributions in the last year`,
   ].join(' &nbsp;·&nbsp; ')}<br>\n<b>${s.merged}</b> ${s.merged === 1 ? 'pull request' : 'pull requests'} merged${s.open ? ` and <b>${s.open}</b> still waiting` : ''} in other people's projects</sub></p>`;
   const apps = `<p align="center">${PROJECTS.map(p =>
-    `<a href="${p.url}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-${p.key}-dark.svg"><img src="assets/app-${p.key}-light.svg" width="110" alt="${esc(p.name)}: ${esc(p.long)}"></picture></a>`).join('&nbsp;')}</p>`;
+    `<a href="${p.url}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-${p.key}-dark.svg"><img src="assets/app-${p.key}-light.svg" width="120" alt="${esc(p.name)}: ${esc(p.long)}"></picture></a>`).join('&nbsp;')}</p>`;
   const list = s.prs.slice(0, 4).map(p =>
-    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 60))}`,
+    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo.split('/')[1])}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 60))}`,
   ).join('<br>\n');
   const { layers, pinch } = jarParts(s);
   const jarAlt = `A jam jar in layers showing what my pull requests are made of, by lines changed: ${layers.map(l => `${l.name}${NOTE[l.name] ? ` (${NOTE[l.name]})` : ''} ${pct(l.share)}`).join(', ') || 'still empty'}${pinch.length ? `, with a pinch of ${listNames(pinch)} on top` : ''}.`;
+  // the jar window floats right of the text about my pull requests, like the picture in the header sits right of the name
   const lately = [
-    `<p align="center">I also like helping out in other people's projects: ${helpedLinks(s)}.</p>`,
-    `<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/jar-dark.svg"><img src="assets/jar-light.svg" width="380" alt="${esc(jarAlt)}"></picture><br>\n<sub>what those pull requests are made of, counted in changed lines</sub></p>`,
-    `<p align="center"><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>\n${list}\n</p>`,
+    `<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/jar-dark.svg"><img align="right" src="assets/jar-light.svg" width="400" alt="${esc(jarAlt)}"></picture>I also like helping out in other people's projects: ${helpedLinks(s)}.</p>`,
+    `<p><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>\n${list}\n</p>`,
+    `<br clear="right">`,
   ].join('\n\n');
   return { stats, apps, lately };
 }
