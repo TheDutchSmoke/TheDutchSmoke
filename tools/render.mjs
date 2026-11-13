@@ -1,7 +1,7 @@
 // Version C: "tied with a bow". One satin ribbon runs through the header with the name on it. Along the ribbon,
 // in date order, every pull request in someone else's project sits as a knot: a tied bow once it is merged, a loose
 // loop while it waits for review.
-import { esc, fontFace, write, plural, clip } from './lib.mjs';
+import { esc, fontFace, write, plural, clip, PROJECTS, helpedLinks } from './lib.mjs';
 
 const THEMES = {
   light: {
@@ -41,7 +41,7 @@ const bowShape = (t) => `<g stroke="${t.bowLine}" stroke-width="1.6" stroke-line
 const loopShape = (t) => `<g fill="none" stroke="${t.loop}" stroke-width="2" stroke-linecap="round">
 <path d="M0 0C-6-14 12-16 8-3C5 5-3 6 0 0Z" stroke-dasharray="3 3"/><path d="M0 0L-6 12" stroke-dasharray="3 3"/></g>`;
 
-const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+import { MONTHS } from './lib.mjs';
 
 function header(root, t, s) {
   const knots = [...s.prs].reverse().slice(-14); // oldest left, newest right
@@ -103,30 +103,77 @@ const MOTIF = {
 <rect x="14" y="8" width="12" height="12" rx="3.5" fill="#D81779"/><rect x="38" y="36" width="12" height="12" rx="3.5" fill="#F58DBF"/>`,
   sprinkles: [[16, 12, 30, '#D81779'], [30, 10, -20, '#4FA545'], [44, 14, 60, '#3F8FDB'], [16, 26, -50, '#E8961E'], [30, 25, 15, '#9467D8'], [44, 29, -35, '#D81779'], [18, 40, 70, '#3F8FDB'], [32, 39, -10, '#F58DBF'], [46, 42, 40, '#4FA545']]
     .map(([x, y, a, c]) => `<rect x="${x - 5.5}" y="${y - 2.4}" width="11" height="4.8" rx="2.4" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join(''),
+  tv: `<path d="M24 12L18 4M40 12L46 4" stroke="#A3105A" stroke-width="2.2" stroke-linecap="round"/>
+<rect x="8" y="12" width="48" height="32" rx="7" fill="#F58DBF"/><rect x="13" y="17" width="38" height="22" rx="4" fill="#FFF4F8"/>
+<path d="M28 23V33L37 28Z" fill="#D81779" stroke="#D81779" stroke-width="1.5" stroke-linejoin="round"/>`,
+  elements: `<path d="M19 6C23 12 27 14 26 20C25.5 24 22.5 26.5 19 26.5C15 26.5 12 23.5 12.5 19.5C13 16 16 14.5 16 11C18 13 19 10 19 6Z" fill="#D81779"/>
+<path d="M45 6C49 12 52 16 52 20C52 24 49 27 45 27C41 27 38 24 38 20C38 16 41 12 45 6Z" fill="#3F8FDB"/>
+<ellipse cx="19" cy="40" rx="9" ry="5" transform="rotate(-38 19 40)" fill="#4FA545"/>
+<path d="M36 35H48C51 35 52 32 50 30M36 41H52C55 41 56 44 54 46" fill="none" stroke="#9467D8" stroke-width="2.6" stroke-linecap="round"/>`,
+  console: `<rect x="14" y="2" width="36" height="46" rx="8" fill="#F58DBF"/><rect x="19" y="7" width="26" height="17" rx="3" fill="#FFF4F8"/>
+<path d="M32 19C31 18 28 16 28 14C28 12 30.5 11.5 32 13.5C33.5 11.5 36 12 36 14C36 16 33 18 32 19Z" fill="#D81779"/>
+<rect x="20" y="33" width="10" height="3.6" rx="1.2" fill="#4E2443"/><rect x="23.2" y="29.8" width="3.6" height="10" rx="1.2" fill="#4E2443"/>
+<circle cx="39" cy="32" r="2.8" fill="#FFF4F8"/><circle cx="44" cy="37" r="2.8" fill="#FFF4F8"/>`,
 };
-export const TAGS = [
-  { key: 'map', name: 'Incidentenkaart', url: 'https://incidentenkaart.nl', alt: 'Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources' },
-  { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', alt: 'Crossy Rivals: a Crossy Road-style browser game for up to 20 players at once' },
-  { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', alt: 'SprinkleGrid: a colourful gallery experiment with seasonal themes' },
-];
-function giftTag(root, tag, i, n) {
-  const strip = i === 0 ? 'M0 6H170V22H0L10 14Z' : i === n - 1 ? 'M0 6H170L160 14L170 22H0Z' : 'M0 6H170V22H0Z';
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="170" height="164" viewBox="0 0 170 164" role="img" aria-label="${esc(tag.name)}">
-<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.n{font-family:'Zen Maru Bold',sans-serif;font-size:19px;letter-spacing:-.4px}
-.sway{transform-origin:85px 22px;animation:sway 6s ease-in-out infinite;animation-delay:${(-i * 1.7).toFixed(1)}s}
+// Each tag hangs from its own short piece of ribbon, so the row may wrap on a phone without looking broken.
+function giftTag(root, p, i) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="170" height="186" viewBox="0 0 170 186" role="img" aria-label="${esc(p.name)}: ${esc(p.short)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.n{font-family:'Zen Maru Bold',sans-serif;font-size:19px;letter-spacing:-.4px}.s{font-size:15px;letter-spacing:0}
+.sway{transform-origin:85px 22px;animation:sway 6s ease-in-out infinite;animation-delay:${(-i * 1.3).toFixed(1)}s}
 @keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
 @media (prefers-reduced-motion:reduce){.sway{animation:none}}</style>
-<path d="${strip}" fill="#D81779"/>
-<path d="M0 11H170" stroke="#FF8CC4" stroke-width="2" opacity=".6"/>
+<path d="M14 6H156L148 14L156 22H14L22 14Z" fill="#D81779"/>
+<path d="M22 11H148" stroke="#FF8CC4" stroke-width="2" opacity=".6"/>
 <g class="sway">
 <path d="M85 20C80 30 90 38 85 56" fill="none" stroke="#A3105A" stroke-width="1.6"/>
-<path d="M34 50H136L158 70V148Q158 156 150 156H20Q12 156 12 148V70Z" fill="#FFE1EE" stroke="#D81779" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M34 50H136L158 70V170Q158 178 150 178H20Q12 178 12 170V70Z" fill="#FFE1EE" stroke="#D81779" stroke-width="1.8" stroke-linejoin="round"/>
 <circle cx="85" cy="62" r="5.5" fill="#FFF4F8" stroke="#D81779" stroke-width="1.6"/>
-<g transform="translate(62 74) scale(.72)">${MOTIF[tag.key]}</g>
-<text class="n" x="85" y="141" text-anchor="middle" fill="#4E2443">${esc(tag.name)}</text>
+<g transform="translate(62 74) scale(.72)">${MOTIF[p.key]}</g>
+<text class="n" x="85" y="142" text-anchor="middle" fill="#4E2443">${esc(p.name)}</text>
+<text class="n s" x="85" y="164" text-anchor="middle" fill="#8A5A7C">${esc(p.short)}</text>
 </g>
 </svg>`;
 }
+
+// The last 12 weeks in cross-stitch inside an embroidery hoop: one stitch per day, darker on busier days.
+function hoop(root, s) {
+  const weeks = s.weeks.slice(-12), cell = 17, gx = 260 - (weeks.length * cell) / 2, gy = 108;
+  const shade = n => (n <= 2 ? '#F5ADCF' : n <= 5 ? '#E86AA8' : '#D81779');
+  let k = 0;
+  const stitches = weeks.flatMap((wk, i) => wk.map((d, j) => {
+    const cx = gx + i * cell + cell / 2, cy = gy + j * cell + cell / 2;
+    if (!d.n) return `<circle cx="${cx}" cy="${cy}" r="1.3" fill="#EBCFDD"/>`;
+    return `<g class="st" style="animation-delay:${(0.2 + k++ * 0.06).toFixed(2)}s" stroke="${shade(d.n)}"><path d="M${cx - 5} ${cy - 5}L${cx + 5} ${cy + 5}M${cx + 5} ${cy - 5}L${cx - 5} ${cy + 5}"/></g>`;
+  }));
+  let lastMonth = '';
+  const labels = weeks.map((wk, i) => {
+    const m = MONTHS[Number(wk[0].date.slice(5, 7)) - 1];
+    const out = m !== lastMonth ? `<text class="m" x="${gx + i * cell + cell / 2}" y="${gy + 7 * cell + 18}" text-anchor="middle">${m}</text>` : '';
+    lastMonth = m;
+    return out;
+  }).join('');
+  const total = weeks.flat().reduce((a, d) => a + d.n, 0);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="560" height="330" viewBox="0 0 560 330" role="img" aria-label="${esc(`My last 12 weeks in cross-stitch inside an embroidery hoop: one stitch per active day, darker on busier days (${total} contributions).`)}">
+<defs><pattern id="aida" width="8.5" height="8.5" patternUnits="userSpaceOnUse"><circle cx="4.25" cy="4.25" r=".9" fill="#F0DCE6"/></pattern></defs>
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.m{font-family:'Zen Maru Bold',sans-serif;font-size:14px;fill:#8A5A7C}
+.st{stroke-width:3.2;stroke-linecap:round;fill:none;transform-box:fill-box;transform-origin:center;animation:st .5s ease-out both}
+.needle{transform-origin:430px 236px;animation:needle 5s ease-in-out infinite}
+@keyframes st{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes needle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+@media (prefers-reduced-motion:reduce){.st,.needle{animation:none}}</style>
+<circle cx="260" cy="172" r="146" fill="#C99566"/>
+<circle cx="260" cy="168" r="146" fill="#E9C59A"/>
+<circle cx="260" cy="168" r="128" fill="#FFF8FB"/>
+<circle cx="260" cy="168" r="128" fill="url(#aida)"/>
+<circle cx="260" cy="168" r="128" fill="none" stroke="#D9B183" stroke-width="3"/>
+<rect x="240" y="10" width="40" height="22" rx="5" fill="#C99566"/><rect x="236" y="14" width="48" height="10" rx="5" fill="#B9845A"/><circle cx="260" cy="12" r="7" fill="#D6A877"/>
+<g class="sts">${stitches.join('')}</g>
+${labels}
+<g class="needle"><path d="M396 228C430 236 440 268 470 280S520 300 534 318" fill="none" stroke="#D81779" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M534 318L552 296" stroke="#9AA3AE" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="549" cy="299" rx="1.2" ry="3" transform="rotate(40 549 299)" fill="#FFF"/></g>
+</svg>`;
+}
+
 const ICONS = {
   'knot-merged': `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="-23 -13 46 34" role="img" aria-label="merged">${bowShape({ bow: '#FFE1EE', bowLine: '#D81779' })}</svg>`,
   'knot-open': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-10 -16 26 30" role="img" aria-label="open">${loopShape({ loop: '#D81779' })}</svg>`,
@@ -134,12 +181,14 @@ const ICONS = {
 
 export function render(root, s) {
   for (const [mode, t] of Object.entries(THEMES)) write(root, `assets/header-${mode}.svg`, header(root, t, s));
-  TAGS.forEach((tag, i) => write(root, `assets/tag-${tag.key}.svg`, giftTag(root, tag, i, TAGS.length)));
+  PROJECTS.forEach((p, i) => write(root, `assets/tag-${p.key}.svg`, giftTag(root, p, i)));
+  write(root, 'assets/hoop.svg', hoop(root, s));
   for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
 
-  const list = s.prs.slice(0, 4).map(p =>
+  const list = s.prs.slice(0, 5).map(p =>
     `<img src="assets/knot-${p.status}.svg" height="14" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 58))}`,
   ).join('<br>\n');
-  const lately = `<p><sub>${s.merged} bows and ${s.open} loose loops so far, across ${s.repos} projects. The newest knots:</sub><br>\n${list}</p>`;
-  return { lately };
+  const lately = `<p><sub>${s.merged} bows and ${s.open} loose loops so far, across ${s.repos} projects. The newest knots:</sub><br>\n${list}</p>\n<p>I like helping out in other people's projects: ${helpedLinks(s)}.</p>`;
+  const tags = `<p align="center">${PROJECTS.map(p => `<a href="${p.url}"><img src="assets/tag-${p.key}.svg" width="130" alt="${esc(p.name)}: ${esc(p.long)}"></a>`).join('&nbsp;')}</p>`;
+  return { lately, tags };
 }
