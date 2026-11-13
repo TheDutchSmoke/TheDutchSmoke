@@ -1,6 +1,6 @@
-// Version B: "pocket pal". A little cloud-shaped virtual pet. Its pet, puff, is fed by public GitHub activity:
-// the mood follows the days since the last contribution, the heart meter follows this week's contributions.
-import { esc, fontFace, write, plural, clip } from './lib.mjs';
+// Version B: "pocket pal". A little cloud-shaped virtual pet next to the text. Its pet, puff, is fed by public GitHub
+// activity: the mood follows the days since the last contribution, the heart meter this week's contributions.
+import { esc, write, plural, clip } from './lib.mjs';
 
 const THEMES = {
   light: {
@@ -69,24 +69,6 @@ const HEART5 = ['.#.#.', '#####', '#####', '.###.', '..#..'];
 const HEART5_OPEN = ['.#.#.', '#.#.#', '#...#', '.#.#.', '..#..'];
 const ZED = ['###', '..#', '.#.', '#..', '###'];
 
-const GLYPHS = {
-  A: ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'], E: ['#####', '#....', '#....', '####.', '#....', '#....', '#####'],
-  F: ['#####', '#....', '#....', '####.', '#....', '#....', '#....'], L: ['#....', '#....', '#....', '#....', '#....', '#....', '#####'],
-  M: ['#...#', '##.##', '#.#.#', '#.#.#', '#...#', '#...#', '#...#'], S: ['.####', '#....', '#....', '.###.', '....#', '....#', '####.'],
-  T: ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'], U: ['#...#', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'],
-  Y: ['#...#', '#...#', '.#.#.', '..#..', '..#..', '..#..', '..#..'], ' ': ['...', '...', '...', '...', '...', '...', '...'],
-  '>': ['#....', '##...', '###..', '####.', '###..', '##...', '#....'],
-};
-function pixelText(text, px, x0, y0, color) {
-  let x = x0, out = '';
-  for (const ch of text) {
-    const g = GLYPHS[ch];
-    out += pixels(g, px, x, y0, { '#': color });
-    x += (g[0].length + 1) * px;
-  }
-  return { svg: out, width: x - x0 - px };
-}
-
 // ---------- the device ----------
 function device(t, s, mood, hearts) {
   const cx = 228, px = 6;
@@ -125,26 +107,20 @@ ${extras}
 </g>`;
 }
 
-const MOODS = {
-  happy: 'puff is happy & well fed ♥',
-  chill: 'puff is chilling, a little peckish',
-  sleepy: 'puff is napping… zzz',
-};
-
-function header(root, t, s) {
+const MOOD_TEXT = { happy: 'puff is happy & well fed', chill: 'puff is chilling, a little peckish', sleepy: 'puff is napping' };
+function state(s) {
   const mood = s.daysSince === null || s.daysSince > 6 ? 'sleepy' : s.daysSince <= 1 ? 'happy' : 'chill';
   const hearts = s.week === 0 ? 0 : s.week <= 2 ? 1 : s.week <= 5 ? 2 : s.week <= 9 ? 3 : 4;
-  const desc = `A pastel cloud-shaped pocket pet. On its little screen lives puff, a smoke-puff creature with a bow. ${MOODS[mood].replace(' ♥', '')}. The heart meter shows ${hearts} of 4 hearts: ${plural(s.week, 'contribution', 'contributions')} in the last 7 days.`;
-  const dots = [];
-  for (let y = 14; y < 300; y += 28) for (let x = (y / 28) % 2 ? 14 : 28; x < 1100; x += 28) dots.push(`<circle cx="${x}" cy="${y}" r="2.6"/>`);
-  return {
-    mood, hearts,
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-labelledby="t d">
-<title id="t">TheDutchSmoke's pocket pal</title><desc id="d">${esc(desc)}</desc>
-<defs><clipPath id="clip"><rect width="1100" height="300" rx="26"/></clipPath></defs>
+  return { mood, hearts };
+}
+
+// The device on its own, cropped tight, for the layout where the text sits next to it.
+function pet(t, s) {
+  const { mood, hearts } = state(s);
+  const desc = `A pastel cloud-shaped pocket pet. On its little screen lives puff, a smoke-puff creature with a bow. ${MOOD_TEXT[mood]}. The heart meter shows ${hearts} of 4 hearts: ${plural(s.week, 'contribution', 'contributions')} in the last 7 days.`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="388" height="310" viewBox="34 0 388 310" role="img" aria-labelledby="t d">
+<title id="t">puff, TheDutchSmoke's pocket pet</title><desc id="d">${esc(desc)}</desc>
 <style>
-${fontFace(root, 'Mochiy Pop One', 'mochiy-pop.woff2')}
-.pop{font-family:'Mochiy Pop One',sans-serif}
 .bob{animation:bob 6s ease-in-out infinite}
 .hop{animation:hop 1.1s steps(1) infinite}
 .breathe{animation:breathe 2.6s steps(1) infinite}
@@ -157,39 +133,12 @@ ${fontFace(root, 'Mochiy Pop One', 'mochiy-pop.woff2')}
 @keyframes rise{0%{transform:translateY(8px);opacity:0}25%{opacity:1}100%{transform:translateY(-26px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.bob,.hop,.breathe,.blink,.rise{animation:none}}
 </style>
-<g clip-path="url(#clip)">
-<rect width="1100" height="300" fill="${t.back}"/>
-<g fill="${t.dot}">${dots.join('')}</g>
+<ellipse cx="228" cy="300" rx="140" ry="8" fill="${t.dot}" opacity=".9"/>
 ${device(t, s, mood, hearts)}
-<text class="pop" x="452" y="118" font-size="54" fill="${t.ink}">TheDutchSmoke</text>
-<path d="M466 150H1040Q1056 150 1056 166V214Q1056 230 1040 230H486Q470 230 470 214V196L446 186L470 176V166Q470 150 486 150Z" fill="${t.bubble}" stroke="${t.bubbleLine}" stroke-width="2"/>
-<text class="pop" x="496" y="201" font-size="29" fill="${t.accent}">${esc(MOODS[mood])}</text>
-<text class="pop" x="474" y="270" font-size="19" fill="${t.muted}">a pocket pet that lives on my commits &amp; pull requests</text>
-</g>
-</svg>`,
-  };
+</svg>`;
 }
 
 // ---------- small pixel assets ----------
-const tile = (rows, colors, label) => `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="${esc(label)}" shape-rendering="crispEdges">
-<rect width="64" height="64" rx="14" fill="#F4ECFF"/>
-${pixels(rows, 4, 32 - rows[0].length * 2, 32 - rows.length * 2, colors)}
-</svg>`;
-
-const ICONS = {
-  'icon-map': tile(['....####....', '..########..', '.##########.', '.####..####.', '.###....###.', '.####..####.', '.##########.', '..########..', '...######...', '....####....', '.....##.....'],
-    { '#': '#D81779' }, 'pixel map pin'),
-  'icon-road': tile(['.####.......', '.#ee#.......', '.####.......', 'oooooooooooo', '............', '##.##.##.##.', '............', 'oooooooooooo', '.......####.', '.......#ee#.', '.......####.'],
-    { '#': '#D81779', e: '#FFFFFF', o: '#B48CE6' }, 'two pixel players crossing a road'),
-  'icon-sprinkles': tile(['#...o...x...', '.#...o...x..', '............', '..x...#...o.', '...x...#...o', '............', 'o...x...#...', '.o...x...#..', '............', '...#...o...x', '....#...o...'],
-    { '#': '#D81779', o: '#5FA8E8', x: '#7CBF6A' }, 'pixel sprinkles'),
-};
-
-function label(text) {
-  const t = pixelText('> ' + text, 3, 0, 0, '#D81779');
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${t.width}" height="21" viewBox="0 0 ${t.width} 21" role="img" aria-label="${esc(text.toLowerCase())}" shape-rendering="crispEdges">${t.svg}</svg>`;
-}
-
 const heartIcon = (open) => `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 5 5" role="img" aria-label="${open ? 'open' : 'merged'}" shape-rendering="crispEdges">${pixels(open ? HEART5_OPEN : HEART5, 1, 0, 0, { '#': '#D81779' })}</svg>`;
 
 function divider(t) {
@@ -201,28 +150,28 @@ ${pixels(PUFF.body.slice(2), 2, 534, 6, { '#': t.accent })}${pixels(PUFF.eyesOpe
 </svg>`;
 }
 
+const SPRITES = {
+  'px-map': [['....####....', '..########..', '.##########.', '.####..####.', '.###....###.', '.####..####.', '.##########.', '..########..', '...######...', '....####....', '.....##.....'], { '#': '#D81779' }],
+  'px-road': [['.####.......', '.#ee#.......', '.####.......', 'oooooooooooo', '............', '##.##.##.##.', '............', 'oooooooooooo', '.......####.', '.......#ee#.', '.......####.'], { '#': '#D81779', e: '#FFFFFF', o: '#9E7BD6' }],
+  'px-sprinkles': [['#...o...x...', '.#...o...x..', '............', '..x...#...o.', '...x...#...o', '............', 'o...x...#...', '.o...x...#..', '............', '...#...o...x', '....#...o...'], { '#': '#D81779', o: '#3F8FDB', x: '#4FA545' }],
+};
+const sprite = (rows, colors) => `<svg xmlns="http://www.w3.org/2000/svg" width="${rows[0].length * 2}" height="${rows.length * 2}" viewBox="0 0 ${rows[0].length} ${rows.length}" aria-hidden="true" shape-rendering="crispEdges">${pixels(rows, 1, 0, 0, colors)}</svg>`;
+
 export function render(root, s) {
-  let mood = 'chill';
+  const { mood } = state(s);
   for (const [mode, t] of Object.entries(THEMES)) {
-    const h = header(root, t, s);
-    mood = h.mood;
-    write(root, `assets/header-${mode}.svg`, h.svg);
+    write(root, `assets/pet-${mode}.svg`, pet(t, s));
     write(root, `assets/divider-${mode}.svg`, divider(t));
   }
-  for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
-  write(root, 'assets/label-stuff.svg', label('MY STUFF'));
-  write(root, 'assets/label-lately.svg', label('LATELY'));
+  for (const [name, [rows, colors]] of Object.entries(SPRITES)) write(root, `assets/${name}.svg`, sprite(rows, colors));
   write(root, 'assets/heart-merged.svg', heartIcon(false));
   write(root, 'assets/heart-open.svg', heartIcon(true));
 
-  const stats = `<p align="center"><sub>puff's food log: ${[
-    `<b>${s.week}</b> contributions this week`,
-    `<b>${s.year}</b> this year`,
-    `<b>${s.merged}</b> pull requests merged elsewhere`,
-  ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
-  const lately = s.prs.slice(0, 5).map(p =>
-    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 64))}`,
+  const feel = { happy: '<b>happy & well fed</b>', chill: '<b>chilling</b>, and a little peckish', sleepy: '<b>napping</b>: nothing new for a week' }[mood];
+  const moodBlock = `<p>This is <b>puff</b>, a little smoke puff that lives on my commits and pull requests. Today puff is ${feel}: ${plural(s.week, 'contribution', 'contributions')} this week, ${s.year} this year, and ${s.merged} pull requests merged in other people's projects so far.</p>`;
+  const list = s.prs.slice(0, 3).map(p =>
+    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> <a href="${p.url}"><b>${esc(p.repo.split('/')[1])}</b> #${p.number}</a> ${esc(clip(p.title, 40))}`,
   ).join('<br>\n');
-  const tally = `<sub>${s.merged} merged and ${s.open} waiting for review, across ${s.repos} projects &nbsp;·&nbsp; full heart = merged</sub>`;
-  return { stats, lately: `<p>\n${lately}\n</p>\n<p>${tally}</p>` };
+  const lately = `<p><sub>puff's food log, my newest pull requests in other people's projects (full heart = merged):</sub><br>\n${list}</p>`;
+  return { mood: moodBlock, lately };
 }
