@@ -6,6 +6,13 @@ text{font-family:'Overpass',sans-serif;}
 @media (prefers-reduced-motion:reduce){.ride{animation:none}}</style>
 
 <path d="M0 279H860" stroke="#c9cdd4" stroke-width="3" stroke-linecap="round"/>
+<g transform="translate(134 278)"><path d="M0 0V-20" stroke="#0a8a57" stroke-width="3" stroke-linecap="round"/>
+<path d="M0 -3Q-9 -7 -10 -17Q-2 -13 0 -3ZM0 -6Q8 -9 9 -17Q2 -14 0 -6Z" fill="#0a8a57"/>
+<path d="M-7 -33L-3.5 -28L0 -34L3.5 -28L7 -33V-24Q7 -17 0 -17Q-7 -17 -7 -24Z" fill="#d81779"/></g><g transform="translate(151 278)"><path d="M0 0V-30" stroke="#0a8a57" stroke-width="3" stroke-linecap="round"/>
+<path d="M0 -3Q-9 -7 -10 -17Q-2 -13 0 -3ZM0 -6Q8 -9 9 -17Q2 -14 0 -6Z" fill="#0a8a57"/>
+<path d="M-7 -43L-3.5 -38L0 -44L3.5 -38L7 -43V-34Q7 -27 0 -27Q-7 -27 -7 -34Z" fill="#d81779"/></g><g transform="translate(168 278)"><path d="M0 0V-17" stroke="#0a8a57" stroke-width="3" stroke-linecap="round"/>
+<path d="M0 -3Q-9 -7 -10 -17Q-2 -13 0 -3ZM0 -6Q8 -9 9 -17Q2 -14 0 -6Z" fill="#0a8a57"/>
+<path d="M-7 -30L-3.5 -25L0 -31L3.5 -25L7 -30V-21Q7 -14 0 -14Q-7 -14 -7 -21Z" fill="#d81779"/></g>
 <rect x="85" y="150" width="10" height="129" fill="#a3a9b3"/><rect x="91" y="150" width="4" height="129" fill="#858c98"/>
 <circle cx="90" cy="98" r="78" fill="#0f5a9c"/><circle cx="90" cy="98" r="70" fill="none" stroke="#fdfdfb" stroke-width="3.5"/>
 <g transform="translate(86 104) scale(.98)"><g>
