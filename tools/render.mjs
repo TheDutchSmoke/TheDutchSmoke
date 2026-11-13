@@ -15,7 +15,7 @@ const THEMES = {
   },
 };
 
-const PHRASES = ['into domains, DNS & email', 'self-hosting little things', 'making small tools', 'and the occasional game'];
+const PHRASES = ['welcome to my little corner ♡', 'self-hosting little things', 'making small tools', 'playing the occasional game'];
 
 const heart = (fill, extra = '') => `<path ${extra} d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="${fill}"/>`;
 const star = (x, y, s, fill, cls = '') =>
@@ -125,30 +125,40 @@ ${star(892, 78, 0.6, t.accent, 'twinkle late')}
   };
 }
 
-// 64x64 project tiles. One file for both themes: the tile carries its own ground.
-const tile = (inner, label) => `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="${esc(label)}">
-<rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>
-${inner}
-</svg>`;
-
-const ICONS = {
-  'icon-map': tile(`<path d="M14 21L25 17L39 21L50 17V44L39 48L25 44L14 48Z" fill="#F1E9FF" stroke="#C9B6EE" stroke-width="2" stroke-linejoin="round"/>
+// Project art on a 64x64 grid, shown as desktop icons (tile + label) under the window.
+const ART = {
+  map: `<path d="M14 21L25 17L39 21L50 17V44L39 48L25 44L14 48Z" fill="#F1E9FF" stroke="#C9B6EE" stroke-width="2" stroke-linejoin="round"/>
 <path d="M25 17V44M39 21V48" stroke="#C9B6EE" stroke-width="2"/>
 <path d="M32 15C26 15 22 19.5 22 25C22 32 32 41 32 41C32 41 42 32 42 25C42 19.5 38 15 32 15Z" fill="#D81779"/>
-<circle cx="32" cy="25" r="4" fill="#FFFBFE"/>`, 'map pin on a folded map'),
-  'icon-road': tile(`<rect x="8" y="26" width="48" height="18" fill="#B8A9D9"/>
+<circle cx="32" cy="25" r="4" fill="#FFFBFE"/>`,
+  road: `<rect x="8" y="26" width="48" height="18" fill="#B8A9D9"/>
 <path d="M11 35H53" stroke="#FFFBFE" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round"/>
 <rect x="16" y="12" width="14" height="14" rx="4" fill="#FFFBFE" stroke="#D81779" stroke-width="2"/>
 <circle cx="21" cy="18" r="1.6" fill="#502A49"/><circle cx="26" cy="18" r="1.6" fill="#502A49"/>
 <rect x="36" y="44" width="14" height="14" rx="4" fill="#F5ADCF" stroke="#D81779" stroke-width="2"/>
-<circle cx="41" cy="50" r="1.6" fill="#502A49"/><circle cx="46" cy="50" r="1.6" fill="#502A49"/>`, 'two little players crossing a road'),
-  'icon-sprinkles': tile([
+<circle cx="41" cy="50" r="1.6" fill="#502A49"/><circle cx="46" cy="50" r="1.6" fill="#502A49"/>`,
+  sprinkles: [
     [20, 20, 30, '#D81779'], [32, 18, -20, '#9DCB7E'], [45, 21, 60, '#8FB8F0'], [19, 33, -50, '#F7B955'], [32, 32, 15, '#B98CE8'],
     [45, 34, -35, '#D81779'], [21, 46, 70, '#8FB8F0'], [33, 45, -10, '#F5ADCF'], [45, 46, 40, '#9DCB7E'],
-  ].map(([x, y, a, c]) => `<rect x="${x - 5}" y="${y - 2.2}" width="10" height="4.4" rx="2.2" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join('\n'), 'colourful sprinkles in a grid'),
+  ].map(([x, y, a, c]) => `<rect x="${x - 5}" y="${y - 2.2}" width="10" height="4.4" rx="2.2" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join('\n'),
+};
+export const APPS = [
+  { key: 'map', name: 'Incidentenkaart', url: 'https://incidentenkaart.nl', alt: 'Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources' },
+  { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', alt: 'Crossy Rivals: a Crossy Road-style browser game for up to 20 players at once' },
+  { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', alt: 'SprinkleGrid: a colourful gallery experiment with seasonal themes' },
+];
+function appIcon(root, t, app) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="${esc(app.name)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.l{font-family:'Zen Maru Bold',sans-serif;font-size:18px;letter-spacing:-.3px}</style>
+<ellipse cx="75" cy="106" rx="40" ry="5" fill="${t.shade}" opacity=".55"/>
+<g transform="translate(27 6) scale(1.5)"><rect x="1" y="1" width="62" height="62" rx="16" fill="#FFE0EF" stroke="#EDBDD7" stroke-width="2"/>${ART[app.key]}</g>
+<text class="l" x="75" y="136" text-anchor="middle" fill="${t.ink}">${esc(app.name)}</text>
+</svg>`;
+}
+
+const ICONS = {
   'heart-merged': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-13 -13 26 26" role="img" aria-label="merged"><path d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#D81779"/></svg>`,
   'heart-open': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-13 -13 26 26" role="img" aria-label="open"><path d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="none" stroke="#D81779" stroke-width="2.6" stroke-linejoin="round"/></svg>`,
-  blossom: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="-12 -12 24 24" aria-hidden="true"><g fill="#F5ADCF">${[0, 72, 144, 216, 288].map(a => `<ellipse cx="0" cy="-5.5" rx="4.2" ry="6" transform="rotate(${a})"/>`).join('')}</g><circle r="2.6" fill="#D81779"/></svg>`,
 };
 
 function divider(t) {
@@ -165,19 +175,17 @@ export function render(root, s) {
     blooms = h.blooms;
     write(root, `assets/header-${mode}.svg`, h.svg);
     write(root, `assets/divider-${mode}.svg`, divider(t));
+    for (const app of APPS) write(root, `assets/app-${app.key}-${mode}.svg`, appIcon(root, t, app));
   }
   for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
 
   const stats = `<p align="center"><sub>${[
-    `<b>${s.active30}</b> active days this month`,
+    `<b>${s.active30}</b> active days this month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
     `<b>${s.year}</b> contributions this year`,
-    `<b>${s.merged}</b> pull requests merged elsewhere`,
   ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
-
-  const lately = s.prs.slice(0, 5).map(p =>
-    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 64))}`,
+  const list = s.prs.slice(0, 4).map(p =>
+    `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 60))}`,
   ).join('<br>\n');
-  const tally = `<sub>${s.merged} merged and ${s.open} waiting for review, across ${s.repos} projects &nbsp;·&nbsp; filled heart = merged</sub>`;
-
-  return { stats, lately: `<p>\n${lately}\n</p>\n<p>${tally}</p>` };
+  const lately = `<p align="center"><sub>${s.merged} pull requests merged in other people's projects so far, ${s.open} still waiting. The newest (filled heart = merged):</sub></p>\n<p align="center">\n${list}\n</p>`;
+  return { stats, lately };
 }

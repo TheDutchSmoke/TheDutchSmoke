@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-labelledby="t d">
-<title id="t">hi, i'm TheDutchSmoke.</title><desc id="d">A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with 7 blossoms: one for roughly every active day this month. The line under the name cycles through: into domains, DNS &amp; email, self-hosting little things, making small tools, and the occasional game.</desc>
+<title id="t">hi, i'm TheDutchSmoke.</title><desc id="d">A pink browser window with a little heart-faced computer wearing a bow, and a plant in a pot next to it with 7 blossoms: one for roughly every active day this month. The line under the name cycles through: welcome to my little corner ♡, self-hosting little things, making small tools, playing the occasional game.</desc>
 <defs>
 <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#FFF3F9"/><stop offset="1" stop-color="#F1E9FF"/></linearGradient>
 <clipPath id="clip"><rect x="1" y="1" width="1098" height="298" rx="26"/></clipPath>
@@ -30,10 +30,10 @@
 <g transform="translate(1066 24) scale(0.62)"><path  d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#D81779"/></g>
 <circle cx="900" cy="214" r="150" fill="#FFE0EF" opacity=".5"/>
 <text class="name" x="54" y="152" fill="#502A49">hi, i'm TheDutchSmoke<tspan fill="#D81779">.</tspan></text>
-<text class="phrase p0" x="56" y="208" fill="#D81779" style="animation-delay:0s">into domains, DNS &amp; email</text>
+<text class="phrase p0" x="56" y="208" fill="#D81779" style="animation-delay:0s">welcome to my little corner ♡</text>
 <text class="phrase p1" x="56" y="208" fill="#865B7C" style="animation-delay:3.5s">self-hosting little things</text>
 <text class="phrase p2" x="56" y="208" fill="#D81779" style="animation-delay:7s">making small tools</text>
-<text class="phrase p3" x="56" y="208" fill="#865B7C" style="animation-delay:10.5s">and the occasional game</text>
+<text class="phrase p3" x="56" y="208" fill="#865B7C" style="animation-delay:10.5s">playing the occasional game</text>
 <path d="M690 278H1072" stroke="#EDBDD7" stroke-width="2" stroke-linecap="round"/>
 <g transform="translate(73 27) scale(0.82)"><g transform="rotate(5 885 210)">
 <ellipse cx="889" cy="309" rx="112" ry="12" fill="#E7B5D2" opacity=".5"/>
