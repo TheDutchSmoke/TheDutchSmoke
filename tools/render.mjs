@@ -338,7 +338,7 @@ export function render(root, s) {
 
   const stats = `<p align="center"><sub>${[
     `<b>${s.active30}</b> active days in the last month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
-    `<b>${s.year}</b> contributions this year`,
+    `<b>${s.year}</b> contributions in the last year`,
     `<b>${s.merged}</b> pull requests merged in other people's projects`,
   ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
   const apps = `<p align="center">${PROJECTS.map(p =>

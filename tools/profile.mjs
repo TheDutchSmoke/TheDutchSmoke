@@ -14,5 +14,5 @@ if (!token) {
 }
 const s = summarize(await fetchData(token));
 fillBlocks(root, render(root, s));
-console.log(`ok: ${s.year} contributions this year, ${s.active30} active days in the last 30, ` +
+console.log(`ok: ${s.year} contributions in the last year, ${s.active30} active days in the last 30, ` +
   `${s.merged} merged and ${s.open} open pull requests in other projects`);
