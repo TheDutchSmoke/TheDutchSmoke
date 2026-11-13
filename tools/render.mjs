@@ -184,10 +184,12 @@ ${body}
 // The last 12 weeks as a row of little pots on a shelf: the busier the week, the taller the plant and the more it blooms.
 function pots(root, t, s) {
   const w = s.weekly, n = w.length, x0 = 110, step = (1100 - 2 * x0) / (n - 1);
+  // heights and blossoms are relative to the busiest of these weeks, so the row keeps its shape at any volume
+  const max = Math.max(1, ...w.map(x => x.n)), scale = Math.log2(1 + max);
   let lastMonth = '';
   const items = w.map((wk, i) => {
-    const x = x0 + i * step, h = wk.n ? Math.min(78, 16 + 17 * Math.log2(1 + wk.n)) : 0;
-    const blooms = wk.n === 0 ? 0 : wk.n <= 2 ? 1 : wk.n <= 9 ? 2 : 3;
+    const x = x0 + i * step, h = wk.n ? 16 + (62 * Math.log2(1 + wk.n)) / scale : 0;
+    const blooms = wk.n === 0 ? 0 : wk.n < max / 3 ? 1 : wk.n < (2 * max) / 3 ? 2 : 3;
     const month = MONTHS[Number(wk.start.slice(5, 7)) - 1];
     const label = month !== lastMonth ? `<text class="m" x="${x.toFixed(1)}" y="196" text-anchor="middle" fill="${t.muted}">${month}</text>` : '';
     lastMonth = month;
@@ -361,7 +363,7 @@ export function render(root, s) {
   // two deliberate lines, so the long pull request part never wraps somewhere random
   const stats = `<p align="center"><sub>${[
     `<b>${s.active30}</b> active days in the last month, so the plant has ${plural(blooms, 'blossom', 'blossoms')}`,
-    `<b>${s.year}</b> contributions in the last year`,
+    `<b>${s.year.toLocaleString('en-US')}</b> contributions in the last year`,
   ].join(' &nbsp;·&nbsp; ')}<br>\n<b>${s.merged}</b> ${s.merged === 1 ? 'pull request' : 'pull requests'} merged${s.open ? ` and <b>${s.open}</b> still waiting` : ''} in other people's projects</sub></p>`;
   const apps = `<p align="center">${PROJECTS.map(p =>
     `<a href="${p.url}"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-${p.key}-dark.svg"><img src="assets/app-${p.key}-light.svg" width="120" alt="${esc(p.name)}: ${esc(p.long)}"></picture></a>`).join('&nbsp;')}</p>`;
