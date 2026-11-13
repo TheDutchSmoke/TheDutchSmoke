@@ -1,6 +1,6 @@
 // Version B: "pocket pal". A little cloud-shaped virtual pet next to the text. Its pet, puff, is fed by public GitHub
 // activity: the mood follows the days since the last contribution, the heart meter this week's contributions.
-import { esc, write, plural, clip } from './lib.mjs';
+import { esc, write, plural, clip, PROJECTS, helpedLinks } from './lib.mjs';
 
 const THEMES = {
   light: {
@@ -154,7 +154,39 @@ const SPRITES = {
   'px-map': [['....####....', '..########..', '.##########.', '.####..####.', '.###....###.', '.####..####.', '.##########.', '..########..', '...######...', '....####....', '.....##.....'], { '#': '#D81779' }],
   'px-road': [['.####.......', '.#ee#.......', '.####.......', 'oooooooooooo', '............', '##.##.##.##.', '............', 'oooooooooooo', '.......####.', '.......#ee#.', '.......####.'], { '#': '#D81779', e: '#FFFFFF', o: '#9E7BD6' }],
   'px-sprinkles': [['#...o...x...', '.#...o...x..', '............', '..x...#...o.', '...x...#...o', '............', 'o...x...#...', '.o...x...#..', '............', '...#...o...x', '....#...o...'], { '#': '#D81779', o: '#3F8FDB', x: '#4FA545' }],
+  'px-tv': [['..#......#..', '...#....#...', '############', '#..........#', '#...#......#', '#...##.....#', '#...###....#', '#...##.....#', '#...#......#', '#..........#', '############', '.##......##.'], { '#': '#D81779' }],
+  'px-elements': [['..#.......o.', '..##......o.', '.###.....ooo', '.####....ooo', '#####...oooo', '#####...oooo', '.###.....oo.', '............', '.xx....w.w.w', 'xxx.....w.w.', 'xx.....w.w.w'], { '#': '#D81779', o: '#3F8FDB', x: '#4FA545', w: '#9467D8' }],
+  'px-console': [['.##########.', '#..........#', '#.########.#', '#.#......#.#', '#.#..##..#.#', '#.#......#.#', '#.########.#', '#..........#', '#..#....##.#', '#.###......#', '#..#...##..#', '.##########.'], { '#': '#D81779' }],
 };
+
+// puff's diary: the last 12 weeks as pixel bars on a long LCD strip, with puff sitting on the busiest week.
+function diary(s) {
+  const c = LCD, px = 8, w = s.weekly;
+  const max = Math.max(1, ...w.map(x => x.n));
+  const busiest = w.findIndex(x => x.n === max);
+  const bar = 6, gap = 2, base = 134, x0 = Math.round((1100 - (w.length * (bar + gap) - gap) * px) / 2);
+  const bars = w.map((wk, i) => {
+    const h = wk.n ? Math.max(1, Math.round(9 * Math.log2(1 + wk.n) / Math.log2(1 + max))) : 0;
+    const x = x0 + i * (bar + gap) * px;
+    const cells = [];
+    for (let r = 0; r < h; r++) cells.push(`<rect x="${x}" y="${base - (r + 1) * px}" width="${bar * px - 2}" height="${px - 2}" fill="${c.ink}"/>`);
+    if (!h) cells.push(`<rect x="${x}" y="${base - 3}" width="${bar * px - 2}" height="2" fill="${c.mid}"/>`);
+    return cells.join('');
+  });
+  const bx = x0 + busiest * (bar + gap) * px + (bar * px) / 2;
+  const bh = w[busiest].n ? Math.max(1, Math.round(9 * Math.log2(1 + max) / Math.log2(1 + max))) : 0;
+  const puff = puffSprite('happy', 4, bx - 32, base - bh * px - 56, c);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="170" viewBox="0 0 1100 170" role="img" aria-label="${esc(`puff's diary: my last 12 weeks as bars, one per week (${w.map(x => x.n).join(', ')} contributions). puff sits on the busiest week.`)}" shape-rendering="crispEdges">
+<style>.hop{animation:hop 1.1s steps(1) infinite}.blink{animation:blink 5s steps(1) infinite}
+@keyframes hop{0%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes blink{0%{opacity:1}93%{opacity:0}97%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.hop,.blink{animation:none}}</style>
+<rect x="40" y="4" width="1020" height="162" rx="26" fill="#6A3A61"/>
+<rect x="56" y="18" width="988" height="134" rx="14" fill="${c.ground}"/>
+<path d="M72 34H220" stroke="${c.glare}" stroke-width="5" stroke-linecap="round"/>
+${bars.join('\n')}
+<g class="hop">${puff}</g>
+</svg>`;
+}
 const sprite = (rows, colors) => `<svg xmlns="http://www.w3.org/2000/svg" width="${rows[0].length * 2}" height="${rows.length * 2}" viewBox="0 0 ${rows[0].length} ${rows.length}" aria-hidden="true" shape-rendering="crispEdges">${pixels(rows, 1, 0, 0, colors)}</svg>`;
 
 export function render(root, s) {
@@ -163,6 +195,7 @@ export function render(root, s) {
     write(root, `assets/pet-${mode}.svg`, pet(t, s));
     write(root, `assets/divider-${mode}.svg`, divider(t));
   }
+  write(root, 'assets/diary.svg', diary(s));
   for (const [name, [rows, colors]] of Object.entries(SPRITES)) write(root, `assets/${name}.svg`, sprite(rows, colors));
   write(root, 'assets/heart-merged.svg', heartIcon(false));
   write(root, 'assets/heart-open.svg', heartIcon(true));
@@ -173,5 +206,8 @@ export function render(root, s) {
     `<img src="assets/heart-${p.status}.svg" width="13" height="13" alt="${p.status}"> <a href="${p.url}"><b>${esc(p.repo.split('/')[1])}</b> #${p.number}</a> ${esc(clip(p.title, 40))}`,
   ).join('<br>\n');
   const lately = `<p><sub>puff's food log, my newest pull requests in other people's projects (full heart = merged):</sub><br>\n${list}</p>`;
-  return { mood: moodBlock, lately };
+  const projects = `<p>${PROJECTS.map(p =>
+    `<img src="assets/px-${p.key}.svg" height="20" alt=""> &nbsp;<a href="${p.url}"><b>${esc(p.name)}</b></a>, ${esc(p.long)}`).join('<br>\n')}</p>`;
+  const helped = `<p>Projects I've helped out in: ${helpedLinks(s)}.</p>`;
+  return { mood: moodBlock, lately, projects, helped };
 }

@@ -5,6 +5,18 @@ import { dirname, join } from 'node:path';
 
 export const LOGIN = 'TheDutchSmoke';
 
+// The things on the profile, in order. `short` goes under icons and tags, `long` in sentences.
+export const PROJECTS = [
+  { key: 'map', name: 'Incidentenkaart', url: 'https://incidentenkaart.nl', short: 'incident map', long: 'incident reports in the Netherlands on one map, with traceable sources' },
+  { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', short: 'browser game', long: 'a Crossy Road-style browser game for up to 20 players' },
+  { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', short: 'colour gallery', long: 'a colourful gallery with seasonal themes' },
+  { key: 'tv', name: 'SofaStream', url: 'https://github.com/TheDutchSmoke/sofastream', short: 'Twitch on TV', long: 'Twitch on the Apple TV, started from a macOS terminal' },
+  { key: 'elements', name: 'Elementen', url: 'https://github.com/TheDutchSmoke/elementen-resourcepack', short: 'Minecraft bending', long: 'a bending adventure for my own Minecraft server' },
+  { key: 'console', name: 'myselfhosted.eu', url: 'https://myselfhosted.eu', short: 'pocket card', long: 'my pocket business card: a tiny handheld that boots into my accounts' },
+];
+
+export const INTRO = 'I like having my own little corner of the internet and making it feel like mine. I run a couple of small servers, build tools and games for fun, and now and then translate an app I love into Dutch.';
+
 // Pull requests come from search: only public repos, never the account's own repos or forks.
 const QUERY = `query($login: String!, $q: String!) {
   user(login: $login) {
@@ -66,6 +78,10 @@ export function summarize(user, today = new Date()) {
     lastActive, daysSince,
     last30: lastN(30),
     weeks: cal.weeks.map(w => w.contributionDays.map(d => ({ date: d.date, n: d.contributionCount }))),
+    // the last 12 calendar weeks (Sunday to Saturday), oldest first
+    weekly: cal.weeks.slice(-12).map(w => ({ start: w.contributionDays[0].date, n: w.contributionDays.reduce((a, d) => a + d.contributionCount, 0) })),
+    // other people's projects with a pull request of mine, most recent first
+    helped: [...new Set(prs.map(p => p.repo))],
     merged: prs.filter(p => p.status === 'merged').length,
     open: prs.filter(p => p.status === 'open').length,
     repos: new Set(prs.map(p => p.repo)).size,
@@ -116,3 +132,9 @@ export function rng(seed) {
   for (const ch of String(seed)) s = (s * 31 + ch.charCodeAt(0)) >>> 0;
   return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
 }
+
+// One line linking every project I sent a pull request to (to my pull requests there).
+export function helpedLinks(s) {
+  return s.helped.map(r => `<a href="https://github.com/${r}/pulls?q=is%3Apr+author%3A${LOGIN}">${esc(r.split('/')[1])}</a>`).join(' · ');
+}
+export const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
