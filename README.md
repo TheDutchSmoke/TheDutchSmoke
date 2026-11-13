@@ -1,43 +1,32 @@
-<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/header-dark.svg"><img src="./assets/header-light.svg" alt="Hi, I&#x27;m TheDutchSmoke." width="100%"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg"><img src="assets/header-light.svg" width="100%" alt="hi, i'm TheDutchSmoke. A pink browser window with a little heart-faced computer and a plant that blooms when I've been busy."></picture>
 
-<p align="center">I like having my own little corner of the internet — and making it feel like mine.</p>
+<!-- live:stats -->
+<p align="center"><sub><b>12</b> active days in the last month, so the plant has 7 blossoms &nbsp;·&nbsp; <b>123</b> contributions in the last year<br>
+<b>7</b> pull requests merged and <b>9</b> still waiting in other people's projects</sub></p>
+<!-- /live:stats -->
 
-<p align="center">My background is in <b>domains, DNS and email</b>.<br>
-Outside that: self-hosting, websites, small tools and the occasional game.</p>
+<p align="center">I like having my own little corner of the internet and making it feel like mine.<br>
+I run a couple of small servers, build tools and games for fun, and now and then translate an app I love into Dutch.</p>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg"><img src="./assets/divider-light.svg" alt="" width="100%"></picture>
+<!-- live:apps -->
+<p align="center"><a href="https://incidentenkaart.nl"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-map-dark.svg"><img src="assets/app-map-light.svg" width="120" alt="Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources"></picture></a>&nbsp;<a href="https://crossyrivals.com"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-road-dark.svg"><img src="assets/app-road-light.svg" width="120" alt="Crossy Rivals: a Crossy Road-style browser game for up to 20 players"></picture></a>&nbsp;<a href="https://sprinklegrid.nl"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-sprinkles-dark.svg"><img src="assets/app-sprinkles-light.svg" width="120" alt="SprinkleGrid: a colourful gallery with seasonal themes"></picture></a>&nbsp;<a href="https://github.com/TheDutchSmoke/sofastream"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-tv-dark.svg"><img src="assets/app-tv-light.svg" width="120" alt="SofaStream: Twitch on the Apple TV, started from a macOS terminal"></picture></a>&nbsp;<a href="https://myselfhosted.eu"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/app-console-dark.svg"><img src="assets/app-console-light.svg" width="120" alt="myselfhosted.eu: my pocket business card: a tiny handheld that boots into my accounts"></picture></a></p>
+<!-- /live:apps -->
 
-<h3 align="center">a few things from my corner 🌷</h3>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/pots-dark.svg"><img src="assets/pots-light.svg" width="100%" alt="My last 12 weeks as a window with a row of little pots, one per week: the busier the week, the taller the plant."></picture>
 
-<table width="100%">
-<tr>
-<td width="50%" valign="top">
-<a href="https://incidentenkaart.nl"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/incidents-dark.svg"><img src="./assets/incidents-light.svg" alt="Incidentenkaart Nederland" width="100%"></picture></a>
-<p>Public incident reports in the Netherlands, brought together on a map. Traceable sources, related reports and room for uncertainty.</p>
-<p><a href="https://incidentenkaart.nl"><img src="./assets/button-map.svg" alt="Explore the map" width="200"></a></p>
-</td>
-<td width="50%" valign="top">
-<a href="https://crossyrivals.com"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/crossy-dark.svg"><img src="./assets/crossy-light.svg" alt="Crossy Rivals" width="100%"></picture></a>
-<p>A browser game inspired by Crossy Road. Hop through traffic on your own or play with friends, with multiplayer lobbies and shared rounds.</p>
-<p><a href="https://crossyrivals.com"><img src="./assets/button-play.svg" alt="Play a round" width="176"></a></p>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="https://sprinklegrid.nl"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/sprinkle-dark.svg"><img src="./assets/sprinkle-light.svg" alt="SprinkleGrid" width="100%"></picture></a>
-<p>A colourful gallery experiment with seasonal themes. A small place for colour and a change of scenery.</p>
-<p><a href="https://sprinklegrid.nl"><img src="./assets/button-gallery.svg" alt="Visit the gallery" width="200"></a></p>
-</td>
-<td width="50%" valign="top">
-<a href="https://github.com/SakuraCordApp/SakuraCord/pull/22"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/sakura-dark.svg"><img src="./assets/sakura-light.svg" alt="SakuraCord contribution" width="100%"></picture></a>
-<p>A pull request to show which server a custom emoji comes from, right in the picker. One little improvement to an app I use.</p>
-<p><a href="https://github.com/SakuraCordApp/SakuraCord/pull/22"><img src="./assets/button-pr.svg" alt="View the pull request" width="164"></a></p>
-</td>
-</tr>
-</table>
+<!-- live:lately -->
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/jar-dark.svg"><img align="right" src="assets/jar-light.svg" width="400" alt="A jam jar in layers showing what my pull requests are made of, by lines changed: Swift 43%, Dutch (my translations) 33%, Rust 22%, with a pinch of Python and Objective-C on top."></picture>I also like helping out in other people's projects: <a href="https://github.com/KartikLabhshetwar/better-shot/pulls?q=is%3Apr+author%3ATheDutchSmoke">better-shot</a> · <a href="https://github.com/giovannicoppola/alfred-aeye/pulls?q=is%3Apr+author%3ATheDutchSmoke">alfred-aeye</a> · <a href="https://github.com/crmne/zapfast/pulls?q=is%3Apr+author%3ATheDutchSmoke">zapfast</a> · <a href="https://github.com/crmne/fastframe/pulls?q=is%3Apr+author%3ATheDutchSmoke">fastframe</a> · <a href="https://github.com/crmne/spotifast/pulls?q=is%3Apr+author%3ATheDutchSmoke">spotifast</a> · <a href="https://github.com/bilipp/Lume/pulls?q=is%3Apr+author%3ATheDutchSmoke">Lume</a> · <a href="https://github.com/crmne/winit/pulls?q=is%3Apr+author%3ATheDutchSmoke">winit</a> · <a href="https://github.com/bilipp/LumeCloud/pulls?q=is%3Apr+author%3ATheDutchSmoke">LumeCloud</a> · <a href="https://github.com/SakuraCordApp/SakuraCord/pulls?q=is%3Apr+author%3ATheDutchSmoke">SakuraCord</a> · <a href="https://github.com/chojs23/concord/pulls?q=is%3Apr+author%3ATheDutchSmoke">concord</a> · <a href="https://github.com/espanso/espanso/pulls?q=is%3Apr+author%3ATheDutchSmoke">espanso</a>.</p>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="./assets/divider-dark.svg"><img src="./assets/divider-light.svg" alt="" width="100%"></picture>
+<p><sub>the newest (filled heart = merged, outline = still waiting)</sub><br>
+<img src="assets/heart-open.svg" width="13" height="13" alt="open"> &nbsp;<a href="https://github.com/KartikLabhshetwar/better-shot/pull/199"><b>better-shot</b> #199</a> &nbsp;Fix deleting share links created with direct file links<br>
+<img src="assets/heart-open.svg" width="13" height="13" alt="open"> &nbsp;<a href="https://github.com/giovannicoppola/alfred-aeye/pull/4"><b>alfred-aeye</b> #4</a> &nbsp;Show the Claude Fable weekly limit as its own row (0.3.0)<br>
+<img src="assets/heart-merged.svg" width="13" height="13" alt="merged"> &nbsp;<a href="https://github.com/crmne/zapfast/pull/770"><b>zapfast</b> #770</a> &nbsp;Add Dutch interface translation<br>
+<img src="assets/heart-merged.svg" width="13" height="13" alt="merged"> &nbsp;<a href="https://github.com/crmne/fastframe/pull/70"><b>fastframe</b> #70</a> &nbsp;Use Metal as the first renderer on macOS with wgpu
+</p>
 
-The projects featured here were developed with AI handling the coding. My role: shaping the ideas, deciding how things should behave, testing and refining the results. My earlier websites started with existing Jekyll themes that I customised by hand.
+<br clear="right">
+<!-- /live:lately -->
 
-<p align="center"><sub>Usually somewhere between DNS, self-hosting, privacy, games<br>and “can I make this a little nicer?” ♡</sub></p>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/divider-dark.svg"><img src="assets/divider-light.svg" width="100%" alt=""></picture>
+
+<p align="center"><sub>say hi: <a href="https://myselfhosted.eu">myselfhosted.eu</a> ♡</sub></p>
