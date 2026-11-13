@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="a map pin on a gift tag">
+<path d="M6 8C3 8 10 2 16 6" fill="none" stroke="#D81779" stroke-width="2" stroke-linecap="round"/>
+<path d="M12 10H52Q58 10 58 16V52Q58 58 52 58H12Q6 58 6 52V22Z" fill="#FFE1EE" stroke="#D81779" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="15" cy="19" r="3" fill="#FFF4F8" stroke="#D81779" stroke-width="1.6"/>
+<path d="M34 22C28.5 22 25 26 25 31C25 37.5 34 46 34 46S43 37.5 43 31C43 26 39.5 22 34 22Z" fill="#D81779"/><circle cx="34" cy="31" r="3.6" fill="#FFF4F8"/>
+</svg>

@@ -1,0 +1,42 @@
+# Redraws the live parts of the profile (pictures and numbers) once a day from public GitHub data.
+# Only commits when something actually changed. On a pull request it only checks that the script still works.
+name: Live profile
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/**', '.github/workflows/live.yml']
+  pull_request:
+    paths: ['tools/**', '.github/workflows/live.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: live-profile-${{ github.ref }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Redraw the live parts
+        run: node tools/profile.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit when something changed
+        if: github.event_name != 'pull_request'
+        run: |
+          git add README.md assets
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Live profiel bijgewerkt'
+          git push
