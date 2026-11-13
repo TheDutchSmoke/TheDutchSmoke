@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="36" viewBox="0 0 1100 36" aria-hidden="true">
-<path d="M0 18H500M600 18H1100" stroke="#704664"/>
-<path class="" transform="translate(524 18) scale(0.32)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#FF8DC4"/><g transform="translate(550 20) scale(0.55)"><path  d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#FF8DC4"/></g><path class="" transform="translate(576 18) scale(0.32)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#FF8DC4"/>
+<defs><filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.5" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="2" seed="9" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0.961 0 0 0 0 0.863 0 0 0 0 0.914 .7 0 0 0 -.42"/></filter></defs>
+<g filter="url(#rough)">
+<path d="M4 18C150 15 330 21 500 18M600 18C770 15 950 21 1096 18" fill="none" stroke="#F5DCE9" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+<circle cx="524" cy="18" r="2.6" fill="#F5DCE9"/><path transform="translate(550 19) rotate(0) scale(0.55)" d="M0 9C-3 6-12 0-12-6C-12-14-3-16 0-8C3-16 12-14 12-6C12 0 3 6 0 9Z" fill="#FF8DC4" stroke="#F5DCE9" stroke-width="4.00" stroke-linejoin="round"/><circle cx="576" cy="18" r="2.6" fill="#F5DCE9"/>
+</g>
 </svg>
