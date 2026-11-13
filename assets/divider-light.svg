@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="40" viewBox="0 0 1100 40" aria-hidden="true">
-<path d="M0 20H1100" stroke="#D81779" stroke-width="5"/><path d="M0 20H1100" stroke="#FF8CC4" stroke-width="1.2" opacity=".5"/>
-<g transform="translate(550 19)"><g stroke="#A3105A" stroke-width="1.6" stroke-linejoin="round" fill="#FFE1EE">
-<path d="M-2 0C-8-12-22-12-21-2C-20 7-8 5-2 0Z"/><path d="M2 0C8-12 22-12 21-2C20 7 8 5 2 0Z"/>
-<path d="M-2 2L-9 15L-4 14L-2 18L1 3M1 3L8 15L10 11L14 12L3 1" />
-<ellipse rx="4" ry="4.6"/></g></g>
-</svg>

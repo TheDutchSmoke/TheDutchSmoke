@@ -76,7 +76,12 @@ export function summarize(user, today = new Date()) {
 // ---------- small helpers ----------
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 export const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-export const clip = (s, max) => (s.length <= max ? s : s.slice(0, max - 1).trimEnd() + '…');
+export function clip(s, max) {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max - 1);
+  const space = cut.lastIndexOf(' ');
+  return (space > max * 0.6 ? cut.slice(0, space) : cut).replace(/[\s,:;(-]+$/, '') + '…';
+}
 
 const fontCache = new Map();
 // @font-face rule with the subset font inlined, so the SVG renders the same everywhere (GitHub serves SVGs as images,

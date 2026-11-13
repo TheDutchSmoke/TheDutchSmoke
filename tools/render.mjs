@@ -89,51 +89,57 @@ ${fontFace(root, 'Kaisei Text', 'kaisei-decol-text.woff2', 500)}
 ${placed.join('\n')}
 <text class="small" x="1044" y="84" text-anchor="end" fill="${t.muted}">every bow is a pull request merged in someone else’s project</text>
 <path transform="translate(1062 60) scale(.7)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="${t.spark}"/>
-<path transform="translate(560 72) scale(.55)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="${t.spark}"/>
+<path transform="translate(262 70) scale(.55)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="${t.spark}"/>
 <path transform="translate(180 262) scale(.5)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="${t.spark}"/>
 </g>
 </svg>`;
 }
 
-// 64x64 gift-tag icons, one file for both themes.
-const tag = (inner, label) => `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="${esc(label)}">
-<path d="M6 8C3 8 10 2 16 6" fill="none" stroke="#D81779" stroke-width="2" stroke-linecap="round"/>
-<path d="M12 10H52Q58 10 58 16V52Q58 58 52 58H12Q6 58 6 52V22Z" fill="#FFE1EE" stroke="#D81779" stroke-width="2" stroke-linejoin="round"/>
-<circle cx="15" cy="19" r="3" fill="#FFF4F8" stroke="#D81779" stroke-width="1.6"/>
-${inner}
+// Projects as gift tags hanging from one ribbon. Three images side by side; the ribbon strip runs edge to edge in
+// each, so together they read as one ribbon. One file per tag for both themes: the tags carry their own colours.
+const MOTIF = {
+  map: `<path d="M32 10C25 10 20 15.5 20 22C20 31 32 44 32 44S44 31 44 22C44 15.5 39 10 32 10Z" fill="#D81779"/><circle cx="32" cy="22" r="4.6" fill="#FFF4F8"/>`,
+  road: `<path d="M8 28H56" stroke="#A3105A" stroke-width="12"/><path d="M10 28H54" stroke="#FFF4F8" stroke-width="2" stroke-dasharray="4 4"/>
+<rect x="14" y="8" width="12" height="12" rx="3.5" fill="#D81779"/><rect x="38" y="36" width="12" height="12" rx="3.5" fill="#F58DBF"/>`,
+  sprinkles: [[16, 12, 30, '#D81779'], [30, 10, -20, '#4FA545'], [44, 14, 60, '#3F8FDB'], [16, 26, -50, '#E8961E'], [30, 25, 15, '#9467D8'], [44, 29, -35, '#D81779'], [18, 40, 70, '#3F8FDB'], [32, 39, -10, '#F58DBF'], [46, 42, 40, '#4FA545']]
+    .map(([x, y, a, c]) => `<rect x="${x - 5.5}" y="${y - 2.4}" width="11" height="4.8" rx="2.4" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join(''),
+};
+export const TAGS = [
+  { key: 'map', name: 'Incidentenkaart', url: 'https://incidentenkaart.nl', alt: 'Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources' },
+  { key: 'road', name: 'Crossy Rivals', url: 'https://crossyrivals.com', alt: 'Crossy Rivals: a Crossy Road-style browser game for up to 20 players at once' },
+  { key: 'sprinkles', name: 'SprinkleGrid', url: 'https://sprinklegrid.nl', alt: 'SprinkleGrid: a colourful gallery experiment with seasonal themes' },
+];
+function giftTag(root, tag, i, n) {
+  const strip = i === 0 ? 'M0 6H170V22H0L10 14Z' : i === n - 1 ? 'M0 6H170L160 14L170 22H0Z' : 'M0 6H170V22H0Z';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="170" height="164" viewBox="0 0 170 164" role="img" aria-label="${esc(tag.name)}">
+<style>${fontFace(root, 'Zen Maru Bold', 'zen-maru-bold.woff2', 700)}.n{font-family:'Zen Maru Bold',sans-serif;font-size:19px;letter-spacing:-.4px}
+.sway{transform-origin:85px 22px;animation:sway 6s ease-in-out infinite;animation-delay:${(-i * 1.7).toFixed(1)}s}
+@keyframes sway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@media (prefers-reduced-motion:reduce){.sway{animation:none}}</style>
+<path d="${strip}" fill="#D81779"/>
+<path d="M0 11H170" stroke="#FF8CC4" stroke-width="2" opacity=".6"/>
+<g class="sway">
+<path d="M85 20C80 30 90 38 85 56" fill="none" stroke="#A3105A" stroke-width="1.6"/>
+<path d="M34 50H136L158 70V148Q158 156 150 156H20Q12 156 12 148V70Z" fill="#FFE1EE" stroke="#D81779" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="85" cy="62" r="5.5" fill="#FFF4F8" stroke="#D81779" stroke-width="1.6"/>
+<g transform="translate(62 74) scale(.72)">${MOTIF[tag.key]}</g>
+<text class="n" x="85" y="141" text-anchor="middle" fill="#4E2443">${esc(tag.name)}</text>
+</g>
 </svg>`;
+}
 const ICONS = {
-  'icon-map': tag(`<path d="M34 22C28.5 22 25 26 25 31C25 37.5 34 46 34 46S43 37.5 43 31C43 26 39.5 22 34 22Z" fill="#D81779"/><circle cx="34" cy="31" r="3.6" fill="#FFF4F8"/>`, 'a map pin on a gift tag'),
-  'icon-road': tag(`<path d="M18 36H52" stroke="#A3105A" stroke-width="10"/><path d="M19 36H51" stroke="#FFF4F8" stroke-width="2" stroke-dasharray="4 4"/>
-<rect x="22" y="20" width="10" height="10" rx="3" fill="#D81779"/><rect x="38" y="43" width="10" height="10" rx="3" fill="#F58DBF"/>`, 'two little players crossing a road on a gift tag'),
-  'icon-sprinkles': tag([[24, 24, 30, '#D81779'], [36, 22, -20, '#7CBF6A'], [46, 27, 60, '#5FA8E8'], [24, 37, -50, '#F2A93B'], [36, 35, 15, '#A57BE0'], [46, 40, -35, '#D81779'], [26, 49, 70, '#5FA8E8'], [38, 48, -10, '#F58DBF']]
-    .map(([x, y, a, c]) => `<rect x="${x - 4.5}" y="${y - 2}" width="9" height="4" rx="2" fill="${c}" transform="rotate(${a} ${x} ${y})"/>`).join(''), 'sprinkles on a gift tag'),
   'knot-merged': `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="-23 -13 46 34" role="img" aria-label="merged">${bowShape({ bow: '#FFE1EE', bowLine: '#D81779' })}</svg>`,
   'knot-open': `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-10 -16 26 30" role="img" aria-label="open">${loopShape({ loop: '#D81779' })}</svg>`,
 };
 
-function divider(t) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="40" viewBox="0 0 1100 40" aria-hidden="true">
-<path d="M0 20H1100" stroke="${t.ribbon}" stroke-width="5"/><path d="M0 20H1100" stroke="${t.sheen}" stroke-width="1.2" opacity=".5"/>
-<g transform="translate(550 19)">${bowShape(t)}</g>
-</svg>`;
-}
-
 export function render(root, s) {
-  for (const [mode, t] of Object.entries(THEMES)) {
-    write(root, `assets/header-${mode}.svg`, header(root, t, s));
-    write(root, `assets/divider-${mode}.svg`, divider(t));
-  }
+  for (const [mode, t] of Object.entries(THEMES)) write(root, `assets/header-${mode}.svg`, header(root, t, s));
+  TAGS.forEach((tag, i) => write(root, `assets/tag-${tag.key}.svg`, giftTag(root, tag, i, TAGS.length)));
   for (const [name, svg] of Object.entries(ICONS)) write(root, `assets/${name}.svg`, svg);
 
-  const stats = `<p align="center"><sub>${[
-    `<b>${s.merged}</b> bows tied: pull requests merged elsewhere`,
-    `<b>${s.open}</b> still loose`,
-    `<b>${s.year}</b> contributions this year`,
-  ].join(' &nbsp;·&nbsp; ')}</sub></p>`;
-  const lately = s.prs.slice(0, 5).map(p =>
-    `<img src="assets/knot-${p.status}.svg" height="14" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 64))}`,
+  const list = s.prs.slice(0, 4).map(p =>
+    `<img src="assets/knot-${p.status}.svg" height="14" alt="${p.status}"> &nbsp;<a href="${p.url}"><b>${esc(p.repo)}</b> #${p.number}</a> &nbsp;${esc(clip(p.title, 58))}`,
   ).join('<br>\n');
-  const tally = `<sub>${s.merged} merged and ${s.open} waiting for review, across ${s.repos} projects &nbsp;·&nbsp; bow = merged, loose loop = waiting</sub>`;
-  return { stats, lately: `<p>\n${lately}\n</p>\n<p>${tally}</p>` };
+  const lately = `<p><sub>${s.merged} bows and ${s.open} loose loops so far, across ${s.repos} projects. The newest knots:</sub><br>\n${list}</p>`;
+  return { lately };
 }

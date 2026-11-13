@@ -66,7 +66,7 @@
 <path d="M0 0C-6-14 12-16 8-3C5 5-3 6 0 0Z" stroke-dasharray="3 3"/><path d="M0 0L-6 12" stroke-dasharray="3 3"/></g></g></g>
 <text class="small" x="1044" y="84" text-anchor="end" fill="#8A5A7C">every bow is a pull request merged in someone else’s project</text>
 <path transform="translate(1062 60) scale(.7)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#E7A3C5"/>
-<path transform="translate(560 72) scale(.55)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#E7A3C5"/>
+<path transform="translate(262 70) scale(.55)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#E7A3C5"/>
 <path transform="translate(180 262) scale(.5)" d="M0-12Q2-2 12 0Q2 2 0 12Q-2 2-12 0Q-2-2 0-12Z" fill="#E7A3C5"/>
 </g>
 </svg>
