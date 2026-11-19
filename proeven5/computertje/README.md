@@ -6,7 +6,7 @@
 <li><a href="https://crossyrivals.com">Crossy Rivals</a> browser game</li>
 <li><a href="https://sprinklegrid.nl">SprinkleGrid</a> colour gallery</li>
 <li><a href="https://github.com/TheDutchSmoke/sofastream">SofaStream</a> Twitch on TV</li>
-<li><a href="https://myselfhosted.eu">myselfhosted.eu</a> pocket card</li>
+<li><a href="https://myselfhosted.eu">myselfhosted.eu</a> pocket card<br clear="right"></li>
 </ul>
 
 <p><a href="https://incidentenkaart.nl"><picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/site-map-narrow-dark.svg"><source media="(max-width: 600px)" srcset="assets/site-map-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/site-map-dark.svg"><img src="assets/site-map-light.svg" align="top" width="58%" alt="Incidentenkaart: incident reports in the Netherlands on one map, with traceable sources"></picture></a><a href="https://crossyrivals.com"><picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/site-road-narrow-dark.svg"><source media="(max-width: 600px)" srcset="assets/site-road-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/site-road-dark.svg"><img src="assets/site-road-light.svg" align="top" width="41%" alt="Crossy Rivals: a Crossy Road-style browser game for up to 20 players"></picture></a></p>
