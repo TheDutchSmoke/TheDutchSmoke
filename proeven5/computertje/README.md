@@ -17,5 +17,5 @@
 <!-- /live:helping -->
 
 <!-- live:hi -->
-<p><a href="https://myselfhosted.eu"><picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/site-console-narrow-dark.svg"><source media="(max-width: 600px)" srcset="assets/site-console-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/site-console-dark.svg"><img src="assets/site-console-light.svg" align="middle" width="96" alt="myselfhosted.eu: my pocket business card: a tiny handheld that boots into my accounts"></picture></a>&nbsp;&nbsp; say hi: <a href="https://myselfhosted.eu">myselfhosted.eu</a> ♡</p>
+<p><a href="https://myselfhosted.eu"><picture><source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="assets/site-console-narrow-dark.svg"><source media="(max-width: 600px)" srcset="assets/site-console-narrow-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/site-console-dark.svg"><img src="assets/site-console-light.svg" align="middle" alt="myselfhosted.eu: my pocket business card: a tiny handheld that boots into my accounts"></picture></a>&nbsp;&nbsp; say&nbsp;hi:&nbsp;<a href="https://myselfhosted.eu">myselfhosted.eu</a>&nbsp;♡</p>
 <!-- /live:hi -->
