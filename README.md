@@ -1,7 +1,7 @@
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg"><img src="assets/header-light.svg" width="100%" alt="hi, i'm TheDutchSmoke. A pink browser window with a little heart-faced computer and a plant that blooms when I've been busy."></picture>
 
 <!-- live:stats -->
-<p align="center"><sub><b>28</b> active days in the last month, so the plant has 9 blossoms &nbsp;·&nbsp; <b>1,695</b> contributions in the last year<br>
+<p align="center"><sub><b>29</b> active days in the last month, so the plant has 9 blossoms &nbsp;·&nbsp; <b>1,728</b> contributions in the last year<br>
 <b>7</b> pull requests merged and <b>9</b> still waiting in other people's projects</sub></p>
 <!-- /live:stats -->
 
